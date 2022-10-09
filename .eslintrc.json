@@ -19,7 +19,9 @@
       "alias": {
         "map": [
           ["@src", "./src"],
-          ["@compontents", "./src/components"]
+          ["@components", "./src/components"],
+          ["@context", "./src/context"],
+          ["@pages", "./src/pages"]
         ]
       }
     }
