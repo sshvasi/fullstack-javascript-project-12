@@ -37,6 +37,10 @@
     "*.{css,scss,ts,tsx,json,md}": "prettier --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.8",
     "commander": "^9.4.1",
     "fastify": "^3.29.2",
     "fastify-cli": "^5.5.0",

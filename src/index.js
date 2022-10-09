@@ -1,7 +1,10 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from '@components/App';
-import './index.scss';
+import App from '@src/App';
+import ThemeProvider from './context/ThemeProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
+);
