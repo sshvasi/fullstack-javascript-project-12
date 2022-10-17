@@ -58,7 +58,7 @@ module.exports = {
       React: 'react',
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'public/index.html',
       filename: 'index.html',
     }),
     new MiniCssExtractPlugin(),
@@ -70,7 +70,7 @@ module.exports = {
     open: false,
     proxy: {
       '/': {
-        target: 'http://localhost:3000',
+        target: 'http://0.0.0.0:3000',
         router: () => 'http://0.0.0.0:5001',
         changeOrigin: true,
         logLevel: 'debug',
