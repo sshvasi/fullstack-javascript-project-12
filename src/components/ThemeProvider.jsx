@@ -1,11 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, createContext } from 'react';
 import {
+  ThemeProvider as MaterialThemeProvider,
+  CssBaseline,
   createTheme,
-  ThemeProvider as ColorThemeProvider,
+  useMediaQuery,
 } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import ColorModeContext from './ColorModeContext';
+
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const ThemeProvider = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -32,10 +33,10 @@ const ThemeProvider = ({ children }) => {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ColorThemeProvider theme={theme}>
+      <MaterialThemeProvider theme={theme}>
         <CssBaseline />
         {children}
-      </ColorThemeProvider>
+      </MaterialThemeProvider>
     </ColorModeContext.Provider>
   );
 };
