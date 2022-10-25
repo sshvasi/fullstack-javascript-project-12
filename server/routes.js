@@ -117,7 +117,7 @@ export default (app, defaultState = {}) => {
   });
 
   app.get(
-    '/api/v1/data',
+    '/api/v1/channels',
     { preValidation: [app.authenticate] },
     (req, reply) => {
       const user = state.users.find(({ id }) => id === req.user.userId);
@@ -129,7 +129,24 @@ export default (app, defaultState = {}) => {
 
       reply
         .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.omit(state, 'users'));
+        .send(_.pick(state, ['channels', 'currentChannelId']));
+    },
+  );
+
+  app.get(
+    '/api/v1/messages',
+    { preValidation: [app.authenticate] },
+    (req, reply) => {
+      const user = state.users.find(({ id }) => id === req.user.userId);
+
+      if (!user) {
+        reply.send(new Unauthorized());
+        return;
+      }
+
+      reply
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send(_.pick(state, ['messages']));
     },
   );
 
