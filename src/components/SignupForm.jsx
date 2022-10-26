@@ -1,12 +1,17 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { Box, Link, Button, TextField, Typography } from '@mui/material';
-import { useAuth } from '@components/AuthProvider';
+
+import useAuth from '@hooks/useAuth';
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { logIn } = useAuth();
+
+  const from = location.state?.from?.pathname || '/';
 
   const validationSchema = yup.object({
     username: yup
@@ -29,7 +34,13 @@ const SignupForm = () => {
     try {
       const response = await axios.post('/api/v1/signup', values);
       logIn(response.data);
-    } catch ({ isAxiosError, response: { status } }) {
+      navigate(from, { replace: true });
+    } catch (error) {
+      const {
+        isAxiosError,
+        response: { status },
+      } = error;
+
       if (isAxiosError && status === 409) {
         actions.setErrors({ username: 'Username already exists' });
         actions.setValues({

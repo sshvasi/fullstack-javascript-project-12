@@ -21,7 +21,8 @@
           ["@src", "./src"],
           ["@components", "./src/components"],
           ["@context", "./src/context"],
-          ["@pages", "./src/pages"]
+          ["@hooks", "./src/hooks"],
+          ["@pages", "./src/pages"],
         ]
       }
     }

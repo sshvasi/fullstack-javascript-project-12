@@ -1,12 +1,17 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { Box, Link, Button, TextField, Typography } from '@mui/material';
-import { useAuth } from '@components/AuthProvider';
+
+import useAuth from '@hooks/useAuth';
 
 const LoginForm = () => {
-  const { logIn } = useAuth;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logIn } = useAuth();
+
+  const from = location.state?.from?.pathname || '/';
 
   const validationSchema = yup.object({
     username: yup
@@ -25,13 +30,19 @@ const LoginForm = () => {
     try {
       const response = await axios.post('/api/v1/login', values);
       logIn(response.data);
-    } catch ({ isAxiosError, response: { status } }) {
+      navigate(from, { replace: true });
+    } catch (error) {
+      const {
+        isAxiosError,
+        response: { status },
+      } = error;
+
       if (isAxiosError && status === 401) {
         actions.setErrors({
           username: '',
           password: 'Wrong username or password',
         });
-        actions.setValues({ ...values, password: '' });
+        actions.setValues({ username: '', password: '' });
       }
     }
   };

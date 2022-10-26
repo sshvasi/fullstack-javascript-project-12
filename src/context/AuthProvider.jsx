@@ -1,24 +1,15 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useCallback, useMemo, useState } from 'react';
 
 const AuthContext = createContext({});
 
-const useAuth = () => useContext(AuthContext);
-
 const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
   const [token, setToken] = useState(
     () => localStorage.getItem('token') || null,
   );
   const [username, setUsername] = useState(
     () => localStorage.getItem('username') || null,
   );
+
   const loggedIn = !!token;
 
   const logIn = useCallback((data) => {
@@ -27,14 +18,12 @@ const AuthProvider = ({ children }) => {
     setUsername(username);
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
-    navigate('/');
   }, []);
 
   const logOut = useCallback(() => {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    navigate('/login');
   }, []);
 
   const authInfo = useMemo(
@@ -53,6 +42,6 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { useAuth, AuthContext };
+export { AuthContext };
 
 export default AuthProvider;
