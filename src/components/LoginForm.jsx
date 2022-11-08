@@ -1,50 +1,24 @@
-import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { Formik } from 'formik';
-import axios from 'axios';
 import * as yup from 'yup';
-import { Box, Link, Button, TextField, Typography } from '@mui/material';
+import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
 
-import useAuth from '@hooks/useAuth';
+const validationSchema = yup.object({
+  username: yup
+    .string('Enter your name')
+    .min(3, 'Must be at least 3 characters')
+    .max(20, 'Must be less than 20 characters')
+    .required('Username is required')
+    .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
+  password: yup
+    .string('Enter your password')
+    .required('Password is required')
+    .min(6, 'Must be at least 6 characters'),
+});
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { logIn } = useAuth();
-
-  const from = location.state?.from?.pathname || '/';
-
-  const validationSchema = yup.object({
-    username: yup
-      .string('Enter your name')
-      .min(3, 'Must be at least 3 characters')
-      .max(20, 'Must be less than 20 characters')
-      .required('Username is required')
-      .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
-    password: yup
-      .string('Enter your password')
-      .required('Password is required')
-      .min(5, 'Must be at least 5 characters'),
-  });
-
-  const handleSubmit = async (values, actions) => {
-    try {
-      const response = await axios.post('/api/v1/login', values);
-      logIn(response.data);
-      navigate(from, { replace: true });
-    } catch (error) {
-      const {
-        isAxiosError,
-        response: { status },
-      } = error;
-
-      if (isAxiosError && status === 401) {
-        actions.setErrors({
-          username: '',
-          password: 'Wrong username or password',
-        });
-        actions.setValues({ username: '', password: '' });
-      }
-    }
+  const handleSubmit = () => {
+    console.log('submit');
   };
 
   return (
@@ -55,21 +29,35 @@ const LoginForm = () => {
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      {({ errors, values, touched, handleChange, handleSubmit }) => (
-        <Box
-          noValidate
+      {({ values, errors, touched, handleChange, handleSubmit }) => (
+        <Sheet
           component="form"
+          variant="outlined"
+          noValidate
+          sx={{
+            width: 300,
+            my: 4,
+            py: 3,
+            px: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            borderRadius: 'sm',
+          }}
           onSubmit={handleSubmit}
-          textAlign="center"
         >
+          <Box>
+            <Typography level="h4" component="h1">
+              Welcome!
+            </Typography>
+            <Typography level="body2">Sign in to continue.</Typography>
+          </Box>
           <TextField
             fullWidth
-            required
             autoFocus
             id="username"
             name="username"
             label="Name"
-            margin="normal"
             value={values.username}
             error={touched.username && Boolean(errors.username)}
             helperText={touched.username && errors.username}
@@ -77,37 +65,30 @@ const LoginForm = () => {
           />
           <TextField
             fullWidth
-            required
             id="password"
             name="password"
             label="Password"
             type="password"
-            margin="normal"
             value={values.password}
             error={touched.password && Boolean(errors.password)}
             helperText={touched.password && errors.password}
             onChange={handleChange}
           />
-          <Button
-            fullWidth
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button fullWidth type="submit" sx={{ mt: 1 }}>
             Log In
           </Button>
-          <Typography component="span" variant="body2">
-            Don&apos;t have an account?{' '}
-            <Link
-              component={RouterLink}
-              to="/signup"
-              variant="body2"
-              underline="none"
-            >
-              Sign Up
-            </Link>
+          <Typography
+            fontSize="sm"
+            endDecorator={
+              <Link component={RouterLink} to="/signup">
+                Sign up
+              </Link>
+            }
+            sx={{ alignSelf: 'center' }}
+          >
+            Don&apos;t have an account?
           </Typography>
-        </Box>
+        </Sheet>
       )}
     </Formik>
   );

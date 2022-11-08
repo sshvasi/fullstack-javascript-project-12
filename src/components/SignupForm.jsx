@@ -1,55 +1,28 @@
-import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
-import { Box, Link, Button, TextField, Typography } from '@mui/material';
+import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
 
-import useAuth from '@hooks/useAuth';
+const validationSchema = yup.object({
+  username: yup
+    .string('Enter your name')
+    .required('Username is required')
+    .min(3, 'Must be at least 3 characters')
+    .max(20, 'Must be less than 20 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
+  password: yup
+    .string('Enter your password')
+    .required('Password is required')
+    .min(6, 'Must be at least 6 characters'),
+  passwordConfirmation: yup
+    .string()
+    .required('Please retype your password')
+    .oneOf([yup.ref('password')], 'Passwords do not match'),
+});
 
 const SignupForm = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { logIn } = useAuth();
-
-  const from = location.state?.from?.pathname || '/';
-
-  const validationSchema = yup.object({
-    username: yup
-      .string('Enter your name')
-      .required('Username is required')
-      .min(3, 'Must be at least 3 characters')
-      .max(20, 'Must be less than 20 characters')
-      .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
-    password: yup
-      .string('Enter your password')
-      .required('Password is required')
-      .min(5, 'Must be at least 5 characters'),
-    passwordConfirmation: yup
-      .string()
-      .required('Please retype your password')
-      .oneOf([yup.ref('password')], 'Passwords do not match'),
-  });
-
-  const handleSubmit = async (values, actions) => {
-    try {
-      const response = await axios.post('/api/v1/signup', values);
-      logIn(response.data);
-      navigate(from, { replace: true });
-    } catch (error) {
-      const {
-        isAxiosError,
-        response: { status },
-      } = error;
-
-      if (isAxiosError && status === 409) {
-        actions.setErrors({ username: 'Username already exists' });
-        actions.setValues({
-          username: '',
-          password: '',
-          passwordConfirmation: '',
-        });
-      }
-    }
+  const handleSubmit = () => {
+    console.log('submit');
   };
 
   return (
@@ -61,15 +34,30 @@ const SignupForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, values, touched, handleChange, handleSubmit }) => (
-        <Box
-          noValidate
+        <Sheet
           component="form"
+          variant="outlined"
+          noValidate
+          sx={{
+            width: 300,
+            my: 4,
+            py: 3,
+            px: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            borderRadius: 'sm',
+          }}
           onSubmit={handleSubmit}
-          textAlign="center"
         >
+          <Box>
+            <Typography level="h4" component="h1">
+              Hi!
+            </Typography>
+            <Typography level="body2">Sign up to continue.</Typography>
+          </Box>
           <TextField
             fullWidth
-            required
             autoFocus
             id="username"
             name="username"
@@ -83,7 +71,6 @@ const SignupForm = () => {
 
           <TextField
             fullWidth
-            required
             id="password"
             name="password"
             label="Password"
@@ -97,44 +84,31 @@ const SignupForm = () => {
 
           <TextField
             fullWidth
-            required
             id="passwordConfirmation"
             name="passwordConfirmation"
             label="Confirm password"
             type="password"
             margin="normal"
             value={values.passwordConfirmation}
-            error={
-              touched.passwordConfirmation &&
-              Boolean(errors.passwordConfirmation)
-            }
-            helperText={
-              touched.passwordConfirmation && errors.passwordConfirmation
-            }
+            error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
+            helperText={touched.passwordConfirmation && errors.passwordConfirmation}
             onChange={handleChange}
           />
-
-          <Button
-            fullWidth
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button fullWidth type="submit" sx={{ mt: 1 }}>
             Sign up
           </Button>
-
-          <Typography component="span" variant="body2">
+          <Typography
+            fontSize="sm"
+            endDecorator={
+              <Link component={RouterLink} to="/login">
+                Log in
+              </Link>
+            }
+            sx={{ alignSelf: 'center' }}
+          >
             Already have an account?{' '}
-            <Link
-              component={RouterLink}
-              to="/login"
-              variant="body2"
-              underline="none"
-            >
-              Log in
-            </Link>
           </Typography>
-        </Box>
+        </Sheet>
       )}
     </Formik>
   );
