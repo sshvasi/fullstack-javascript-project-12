@@ -116,39 +116,31 @@ export default (app, defaultState = {}) => {
       .send({ token, username });
   });
 
-  app.get(
-    '/api/v1/channels',
-    { preValidation: [app.authenticate] },
-    (req, reply) => {
-      const user = state.users.find(({ id }) => id === req.user.userId);
+  app.get('/api/v1/channels', { preValidation: [app.authenticate] }, (req, reply) => {
+    const user = state.users.find(({ id }) => id === req.user.userId);
 
-      if (!user) {
-        reply.send(new Unauthorized());
-        return;
-      }
+    if (!user) {
+      reply.send(new Unauthorized());
+      return;
+    }
 
-      reply
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.pick(state, ['channels', 'currentChannelId']));
-    },
-  );
+    reply
+      .header('Content-Type', 'application/json; charset=utf-8')
+      .send(_.pick(state, ['channels', 'currentChannelId']));
+  });
 
-  app.get(
-    '/api/v1/messages',
-    { preValidation: [app.authenticate] },
-    (req, reply) => {
-      const user = state.users.find(({ id }) => id === req.user.userId);
+  app.get('/api/v1/messages', { preValidation: [app.authenticate] }, (req, reply) => {
+    const user = state.users.find(({ id }) => id === req.user.userId);
 
-      if (!user) {
-        reply.send(new Unauthorized());
-        return;
-      }
+    if (!user) {
+      reply.send(new Unauthorized());
+      return;
+    }
 
-      reply
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.pick(state, ['messages']));
-    },
-  );
+    reply
+      .header('Content-Type', 'application/json; charset=utf-8')
+      .send(_.pick(state, ['messages']));
+  });
 
   app.get('/', (_req, reply) => {
     reply.sendFile('index.html');
