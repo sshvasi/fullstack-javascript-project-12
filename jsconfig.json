@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "allowSyntheticDefaultImports": false,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@src": ["./src"],
-      "@compontents": ["./src/components"]
+      "@/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules"]
 }
