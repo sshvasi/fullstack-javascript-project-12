@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "author": "Alexander Vasiliev <asvasi25@gmail.com>",
-  "description": "Simple chat application",
+  "description": "Chat application",
   "license": "ISC",
   "keywords": [
     "react",
@@ -22,19 +22,23 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npm run start-server & npm run start-client",
-    "start-server": "server/index.js",
-    "start-client": "npx webpack serve",
-    "start-fastify": "fastify start server/plugin.js -l info -P -a 0.0.0.0 -p 5001",
-    "build": "webpack",
-    "lint": "npx eslint ."
+    "start": "npm run start:server & npm run start:client",
+    "start:server": "server/index.js",
+    "start:client": "npx webpack serve",
+    "start:fastify": "fastify start server/plugin.js -l info -P -a 0.0.0.0 -p 5001",
+    "build": "webpack"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",
       "eslint"
     ],
-    "*.{css,scss,ts,tsx,json,md}": "prettier --write"
+    "*.{css,scss,json,md}": "prettier --write"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
