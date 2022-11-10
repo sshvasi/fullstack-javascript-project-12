@@ -12,8 +12,51 @@ const getState = (defaultState) => {
     channels: [
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
+      { id: 3, name: 'friends', removable: false },
+      { id: 4, name: 'colleagues', removable: false },
     ],
-    messages: [],
+    messages: [
+      {
+        id: 1,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
+      },
+      {
+        id: 2,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
+      },
+      {
+        id: 3,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',
+      },
+      {
+        id: 4,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
+      },
+      {
+        id: 5,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
+      },
+      {
+        id: 6,
+        channelId: generalChannelId,
+        username: 'Ivan Ivanov',
+        content:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',
+      },
+    ],
     currentChannelId: generalChannelId,
     users: [
       { id: 1, username: 'admin1', password: 'admin1' },
