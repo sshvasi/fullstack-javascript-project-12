@@ -1,11 +1,11 @@
 import { createListenerMiddleware, createSlice } from '@reduxjs/toolkit';
 
-const persistetState = JSON.parse(localStorage.getItem('auth'));
+const persistedState = JSON.parse(localStorage.getItem('auth'));
 
 const initialState = {
-  username: persistetState?.username || null,
-  token: persistetState?.token || null,
-  isAuthenticated: !!persistetState?.token,
+  username: persistedState?.username || null,
+  token: persistedState?.token || null,
+  isAuthenticated: !!persistedState?.token,
 };
 
 export const authSlice = createSlice({
