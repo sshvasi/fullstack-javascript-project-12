@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 import Login from '@/pages/Login';
@@ -6,7 +7,7 @@ import Chat from '@/pages/Chat';
 import Error from '@/pages/Error';
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = true;
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };

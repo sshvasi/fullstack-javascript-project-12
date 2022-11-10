@@ -1,7 +1,12 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
+
+import { setUser } from '@/slices/authSlice';
+import { useLoginUserMutation } from '@/slices/apiSlice';
 
 const validationSchema = yup.object({
   username: yup
@@ -17,23 +22,49 @@ const validationSchema = yup.object({
 });
 
 const LoginForm = () => {
-  const handleSubmit = () => {
-    console.log('submit');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const [loginUser, { data: loginData, isSuccess }] = useLoginUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser(loginData));
+      navigate(location.state?.from || { pathname: '/' });
+    }
+  }, [isSuccess, navigate]);
+
+  const handleSubmit = async (values, actions) => {
+    actions.setSubmitting(true);
+
+    try {
+      await loginUser(values).unwrap();
+      actions.resetForm();
+    } catch (error) {
+      if (error?.status === 401) {
+        actions.setFieldValue('password', '', false);
+        actions.setFieldValue('username', '', false);
+        actions.setFieldError('password', 'Username or password is invalid');
+      }
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (
     <Formik
       initialValues={{ username: '', password: '' }}
-      validationSchema={validationSchema}
-      validateOnBlur={false}
+      initialErrors={{ username: '', password: '' }}
+      validateOnBlur={true}
       validateOnChange={false}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, errors, touched, handleChange, handleSubmit }) => (
+      {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <Sheet
+          noValidate
           component="form"
           variant="outlined"
-          noValidate
           sx={{
             width: 300,
             my: 4,
@@ -42,7 +73,7 @@ const LoginForm = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
-            borderRadius: 'sm',
+            borderRadius: 'md',
           }}
           onSubmit={handleSubmit}
         >
@@ -62,6 +93,7 @@ const LoginForm = () => {
             error={touched.username && Boolean(errors.username)}
             helperText={touched.username && errors.username}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
           <TextField
             fullWidth
@@ -73,8 +105,9 @@ const LoginForm = () => {
             error={touched.password && Boolean(errors.password)}
             helperText={touched.password && errors.password}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          <Button fullWidth type="submit" sx={{ mt: 1 }}>
+          <Button fullWidth type="submit" disabled={isSubmitting} sx={{ mt: 1 }}>
             Log In
           </Button>
           <Typography

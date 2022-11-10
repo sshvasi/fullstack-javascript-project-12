@@ -15,7 +15,13 @@ const getState = (defaultState) => {
     ],
     messages: [],
     currentChannelId: generalChannelId,
-    users: [{ id: 1, username: 'admin', password: 'admin' }],
+    users: [
+      { id: 1, username: 'admin1', password: 'admin1' },
+      { id: 2, username: 'admin2', password: 'admin2' },
+      { id: 3, username: 'admin3', password: 'admin3' },
+      { id: 4, username: 'admin4', password: 'admin4' },
+      { id: 5, username: 'admin5', password: 'admin5' },
+    ],
   };
 
   if (defaultState.messages) {
