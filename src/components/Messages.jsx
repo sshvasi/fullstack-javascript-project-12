@@ -1,12 +1,13 @@
 import { Box, List, ListItem, ListItemContent, Typography } from '@mui/joy';
 
+import useScrollBottom from '@/hooks/useScrollBottom';
 import { useGetChannelsQuery, useGetMessagesQuery } from '@/slices/apiSlice';
 
 const Messages = () => {
   const { data: messagesData } = useGetMessagesQuery();
   const { data: channelsData } = useGetChannelsQuery();
 
-  console.log(messagesData?.messages);
+  const ref = useScrollBottom(messagesData);
 
   return (
     <Box
@@ -15,10 +16,11 @@ const Messages = () => {
         flexGrow: 1,
         overflow: 'auto',
       }}
+      ref={ref}
     >
       <List sx={{ maxWidth: 480, '--List-item-radius': '24px' }}>
         {messagesData?.messages
-          .filter((message) => message.channelId === channelsData.currentChannelId)
+          .filter((message) => message.currentChannelId === channelsData?.currentChannelId)
           .map((message) => (
             <ListItem
               key={message.id}
