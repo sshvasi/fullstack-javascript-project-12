@@ -1,9 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Box, List, ListItem, ListItemContent, Typography } from '@mui/joy';
 
 import useScrollToBottom from '@/hooks/useScrollToBottom';
 import { useGetChannelsQuery, useGetMessagesQuery } from '@/slices/apiSlice';
 
 const Messages = () => {
+  const { username } = useSelector((state) => state.auth);
   const { data: messages } = useGetMessagesQuery();
   const { data: channels } = useGetChannelsQuery();
 
@@ -22,22 +24,46 @@ const Messages = () => {
       }}
       ref={messagesListRef}
     >
-      <List sx={{ maxWidth: 480, '--List-item-radius': '24px' }}>
+      <List
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          '--List-item-radius': '24px',
+        }}
+      >
         {activeChannelMessages?.map((message) => (
           <ListItem
             key={message.id}
             sx={{
-              mb: 2,
+              maxWidth: 500,
               py: 1,
               px: 2,
-              bgcolor: 'background.componentBg',
+              alignSelf: message.username === username ? 'flex-end' : 'flex-start',
+              bgcolor:
+                message.username === username ? 'background.currentUser' : 'background.componentBg',
               border: '1px solid',
               borderColor: 'divider',
             }}
           >
             <ListItemContent key={message.id}>
-              <Typography sx={{ fontSize: 'sm', fontWeight: 'lg' }}>{message.username}</Typography>
-              <Typography sx={{ fontSize: 'sm' }}>{message.content}</Typography>
+              <Typography
+                sx={{
+                  fontSize: 'sm',
+                  fontWeight: 'lg',
+                  color: message.username === username ? 'text.currentUser' : 'text.primary',
+                }}
+              >
+                {message.username}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 'sm',
+                  color: message.username === username ? 'text.currentUser' : 'text.primary',
+                }}
+              >
+                {message.content}
+              </Typography>
             </ListItemContent>
           </ListItem>
         ))}
