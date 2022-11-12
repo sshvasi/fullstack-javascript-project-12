@@ -1,13 +1,13 @@
 import { Box, List, ListItem, ListItemContent, Typography } from '@mui/joy';
 
-import useScrollBottom from '@/hooks/useScrollBottom';
+import useScrollToBottom from '@/hooks/useScrollToBottom';
 import { useGetChannelsQuery, useGetMessagesQuery } from '@/slices/apiSlice';
 
 const Messages = () => {
   const { data: messagesData } = useGetMessagesQuery();
   const { data: channelsData } = useGetChannelsQuery();
 
-  const ref = useScrollBottom(messagesData);
+  const ref = useScrollToBottom(messagesData);
 
   return (
     <Box
