@@ -10,48 +10,48 @@ const getState = (defaultState) => {
   const randomChannelId = getNextId();
   const state = {
     channels: [
-      { id: generalChannelId, name: 'general', removable: false },
-      { id: randomChannelId, name: 'random', removable: false },
-      { id: 3, name: 'friends', removable: true },
-      { id: 4, name: 'colleagues', removable: true },
+      { id: generalChannelId, name: 'General', removable: false },
+      { id: randomChannelId, name: 'Random', removable: false },
+      { id: getNextId(), name: 'Colleagues', removable: true },
+      { id: getNextId(), name: 'Friends', removable: true },
     ],
     messages: [
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
       },
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',
       },
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
       },
       {
         id: getNextId(),
-        currentChannelId: generalChannelId,
+        channelId: generalChannelId,
         username: 'Ivan Ivanov',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',

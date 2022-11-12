@@ -41,8 +41,6 @@
     "*.{css,scss,json,md}": "prettier --write"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/joy": "^5.0.0-alpha.52",
     "@reduxjs/toolkit": "^1.8.6",
