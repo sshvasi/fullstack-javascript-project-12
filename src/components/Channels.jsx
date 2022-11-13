@@ -37,7 +37,7 @@ const Channels = () => {
       <List
         size="sm"
         sx={{
-          '--List-gap': '5px',
+          '--List-gap': '2px',
         }}
       >
         {channels?.channels.map(({ id, name, removable }) => (

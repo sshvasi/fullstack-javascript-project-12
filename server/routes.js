@@ -8,53 +8,77 @@ const getNextId = () => Number(_.uniqueId());
 const getState = (defaultState) => {
   const generalChannelId = getNextId();
   const randomChannelId = getNextId();
+  const friendsChannelId = getNextId();
   const state = {
     channels: [
       { id: generalChannelId, name: 'General', removable: false },
       { id: randomChannelId, name: 'Random', removable: false },
-      { id: getNextId(), name: 'Colleagues', removable: true },
-      { id: getNextId(), name: 'Friends', removable: true },
+      { id: friendsChannelId, name: 'Friends', removable: true },
     ],
     messages: [
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
+        username: 'Jack Chapman',
+        content:
+          'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id vero illo odit architecto ipsum commodi, neque sit eveniet laborum tempora illum et omnis. Aperiam, iusto enim! Eveniet inventore minus officiis, molestiae esse dicta illo accusantium temporibus ut illum in doloribus modi magnam excepturi explicabo ea veniam. Ad accusantium voluptatum sit',
+      },
+      {
+        id: getNextId(),
+        channelId: generalChannelId,
+        username: 'John Smith',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
+        username: 'Thomas Adams',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
+        username: 'Jack Chapman',
         content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. A, fugiat soluta aliquid aut omnis dicta necessitatibus, ab quasi quia, alias eveniet tempora. Quidem nostrum vel iusto cumque quod modi aut corrupti voluptatibus animi, quae commodi facere tenetur repellendus, saepe dolorem, vitae eum nisi iste unde explicabo! Ducimus quam excepturi aliquid esse asperiores obcaecati, consequatur natus reprehenderit repellendus veniam doloremque tenetur optio reiciendis, voluptate culpa consectetur ex repudiandae placeat quaerat est? Voluptate omnis laboriosam labore optio.',
+      },
+
+      {
+        id: getNextId(),
+        channelId: generalChannelId,
+        username: 'James Anderson',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
+        username: 'Jack Booth',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, suscipit. Laborum quisquam, labore ipsum tenetur vero modi excepturi minus laudantium nulla. Tenetur iusto aliquid numquam perferendis. Sapiente repellendus ab quasi aliquam harum debitis impedit ex maxime fugit. Veritatis repellat eligendi excepturi et odio architecto dolor quos aspernatur totam. Dolorum ad labore ullam ipsam error perspiciatis dolore, magni quia vel sint nulla at explicabo itaque. Sint id officiis itaque ut sequi, facilis recusandae dolorum sit voluptatibus!',
+        username: 'Martin Bell',
+        content: 'Lorem ipsum dolor sit amet consectetur.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
-        username: 'Ivan Ivanov',
+        username: 'Jack Chapman',
         content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui voluptas beatae illo. Assumenda molestias consequatur, autem, perspiciatis illo accusantium sequi quibusdam consectetur, deleniti accusamus dignissimos eius dicta ut fugiat. Dicta nobis quas ullam labore, incidunt vero perspiciatis explicabo, odit iste temporibus maxime earum velit culpa? Dolore obcaecati nam quia!',
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo et earum ut iure numquam pariatur dolorem provident ab architecto quod, nulla odio tempora deleniti tempore, nesciunt, possimus quisquam suscipit maxime maiores. At, quas quidem nisi non facere repellat laudantium temporibus dolor magni rem quam id alias commodi ratione recusandae voluptatum consequatur! Assumenda quas blanditiis eos quibusdam dolores incidunt consequuntur rem.',
+      },
+      {
+        id: getNextId(),
+        channelId: randomChannelId,
+        username: 'David Brown',
+        content: 'Lorem ipsum dolor sit.',
+      },
+      {
+        id: getNextId(),
+        channelId: friendsChannelId,
+        username: 'John Johnson',
+        content: 'There are no friends here.',
       },
     ],
     currentChannelId: generalChannelId,
@@ -62,8 +86,6 @@ const getState = (defaultState) => {
       { id: 1, username: 'admin1', password: 'admin1' },
       { id: 2, username: 'admin2', password: 'admin2' },
       { id: 3, username: 'admin3', password: 'admin3' },
-      { id: 4, username: 'admin4', password: 'admin4' },
-      { id: 5, username: 'admin5', password: 'admin5' },
     ],
   };
 

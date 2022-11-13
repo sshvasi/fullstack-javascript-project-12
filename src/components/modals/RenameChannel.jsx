@@ -93,8 +93,8 @@ const RenameChannel = ({ onHide }) => {
               <Button variant="plain" color="neutral" onClick={onHide}>
                 Cancel
               </Button>
-              <Button type="submit" variant="solid" color="danger" disabled={formik.isSubmitting}>
-                Delete
+              <Button type="submit" variant="solid" color="success" disabled={formik.isSubmitting}>
+                Rename
               </Button>
             </Box>
           </Stack>
