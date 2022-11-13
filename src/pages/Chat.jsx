@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Root from '@/components/Layout/Root';
 import Header from '@/components/Layout/Header';
@@ -8,9 +9,12 @@ import Main from '@/components/Layout/Main';
 import Channels from '@/components/Channels';
 import Messages from '@/components/Messages';
 import MessageForm from '@/components/MessageForm';
+import Modal from '@/components/modals';
 
 const Chat = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const modalOpen = useSelector((state) => state.modals.isOpened);
+  const modalType = useSelector((state) => state.modals.type);
 
   return (
     <>
@@ -29,6 +33,7 @@ const Chat = () => {
           <MessageForm />
         </Main>
       </Root>
+      {modalOpen && <Modal type={modalType} />}
     </>
   );
 };

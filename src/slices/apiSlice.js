@@ -61,6 +61,7 @@ export const apiSlice = createApi({
           socket.on(socketEvents.newChannel, (channel) => {
             updateCachedData((draft) => {
               draft.channels.push(channel);
+              draft.currentChannelId = channel.id;
             });
           });
 
@@ -100,7 +101,7 @@ export const apiSlice = createApi({
 
           socket.on(socketEvents.removeChannel, ({ id }) => {
             updateCachedData((draft) => {
-              draft.messages = draft.messages.filter((message) => message.currentChannelId !== id);
+              draft.messages = draft.messages.filter((message) => message.channelId !== id);
             });
           });
         } catch (error) {
