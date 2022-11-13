@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { io } from 'socket.io-client';
 
+const defaultChannelId = 1;
+
 const socket = io();
 
 const socketEvents = {
@@ -75,6 +77,7 @@ export const apiSlice = createApi({
           socket.on(socketEvents.removeChannel, ({ id }) => {
             updateCachedData((draft) => {
               draft.channels = draft.channels.filter((c) => c.id !== id);
+              draft.currentChannelId = defaultChannelId;
             });
           });
         } catch (error) {
