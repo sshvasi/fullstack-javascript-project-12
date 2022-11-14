@@ -26,7 +26,8 @@
     "start:server": "server/index.js",
     "start:client": "npx webpack serve",
     "start:fastify": "fastify start server/plugin.js -l info -P -a 0.0.0.0 -p 5001",
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "npx eslint ."
   },
   "husky": {
     "hooks": {
