@@ -5,13 +5,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 
 import { removeUser } from '@/slices/authSlice';
+import { openDrawer } from '@/slices/drawerSlice';
 import ColorSchemeToggle from '@/components/Layout/ColorSchemeToggle';
 
-const Header = ({ onDrawerOpen, sx = [], ...props }) => {
+const Header = ({ sx = [], ...props }) => {
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const handleLogout = () => {
     dispatch(removeUser());
+  };
+
+  const handleOpenDrawer = () => {
+    dispatch(openDrawer());
   };
 
   return (
@@ -50,7 +55,7 @@ const Header = ({ onDrawerOpen, sx = [], ...props }) => {
           aria-label="Open menu with channel list"
           variant="outlined"
           size="sm"
-          onClick={onDrawerOpen}
+          onClick={handleOpenDrawer}
           sx={{ display: { sm: 'none' } }}
         >
           <MenuIcon />
@@ -69,19 +74,15 @@ const Header = ({ onDrawerOpen, sx = [], ...props }) => {
           Chat
         </Typography>
       </Box>
-      {/* <ul>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
-        <Link to="/signup">Signup</Link>
-      </li>
-      <li>
-        <Link to="/chat">chat</Link>
-      </li>
-    </ul> */}
-      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-        <Button size="sm" variant="outlined" onClick={handleClick}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 2,
+        }}
+      >
+        <Button size="sm" variant="outlined" onClick={handleLogout}>
           Log out
         </Button>
         <ColorSchemeToggle />

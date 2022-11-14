@@ -1,15 +1,21 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, List } from '@mui/joy';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
+import { closeDrawer } from '@/slices/drawerSlice';
 import Channel from '@/components/Channel';
 
 const Channels = () => {
   const dispatch = useDispatch();
   const { data: channels } = useGetChannelsQuery();
+  const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
 
   const handleSelectChannel = (id) => () => {
+    if (isDrawerOpen) {
+      dispatch(closeDrawer());
+    }
+
     dispatch(
       apiSlice.util.updateQueryData('getChannels', undefined, (draft) => {
         draft.currentChannelId = id;

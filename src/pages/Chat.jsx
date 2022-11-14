@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Root from '@/components/Layout/Root';
@@ -12,19 +11,19 @@ import MessageForm from '@/components/MessageForm';
 import Modal from '@/components/modals';
 
 const Chat = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const modalOpen = useSelector((state) => state.modals.isOpened);
+  const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
+  const isModalOpen = useSelector((state) => state.modals.isOpened);
   const modalType = useSelector((state) => state.modals.type);
 
   return (
     <>
-      {drawerOpen && (
-        <SideDrawer onDrawerClose={() => setDrawerOpen(false)}>
+      {isDrawerOpen && (
+        <SideDrawer>
           <Channels />
         </SideDrawer>
       )}
-      <Root drawerOpen>
-        <Header onDrawerOpen={() => setDrawerOpen(true)} />
+      <Root>
+        <Header />
         <SideNav>
           <Channels />
         </SideNav>
@@ -33,7 +32,7 @@ const Chat = () => {
           <MessageForm />
         </Main>
       </Root>
-      {modalOpen && <Modal type={modalType} />}
+      {isModalOpen && <Modal type={modalType} />}
     </>
   );
 };

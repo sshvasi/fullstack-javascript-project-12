@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/joy';
 const MessagesBage = ({ channelName, messagesCount }) => {
   const isNoMessages = messagesCount === 0;
   const isAnyMessages = messagesCount !== 0;
-  const isManyMessages = messagesCount > 0;
+  const isManyMessages = messagesCount > 1;
 
   const messagesCountBage = (
     <>

@@ -1,6 +1,6 @@
 import { Box } from '@mui/joy';
 
-const Root = ({ drawerOpen, sx = [], ...props }) => (
+const Root = ({ sx = [], ...props }) => (
   <Box
     {...props}
     sx={[
@@ -14,8 +14,6 @@ const Root = ({ drawerOpen, sx = [], ...props }) => (
         gridTemplateRows: '64px 1fr',
         minHeight: '100vh',
         bgcolor: 'background.appBody',
-      },
-      drawerOpen && {
         height: '100vh',
         overflow: 'hidden',
       },

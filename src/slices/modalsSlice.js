@@ -17,7 +17,6 @@ export const modalsSlice = createSlice({
       state.extra = payload?.extra || null;
     },
     closeModal: () => {
-      console.log('Modal closed');
       return initialState;
     },
   },
