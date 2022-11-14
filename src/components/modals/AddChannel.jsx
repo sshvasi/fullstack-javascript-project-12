@@ -23,6 +23,7 @@ const getSchema = (fieldName, list) => {
       .string()
       .trim()
       .required('Channel name is required')
+      .max(20, 'Must be less than 20 characters')
       .notOneOf(list, 'Channel already exists'),
   });
 };
