@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createListenerMiddleware, createSlice } from '@reduxjs/toolkit';
 
 const persistedState = JSON.parse(localStorage.getItem('auth'));

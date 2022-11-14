@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { io } from 'socket.io-client';
 
@@ -25,7 +26,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
+      const { token } = getState().auth;
 
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
