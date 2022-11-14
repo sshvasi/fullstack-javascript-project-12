@@ -1,11 +1,13 @@
 import {
+  Box,
   IconButton,
   ListItem,
   ListItemButton,
   ListItemContent,
+  Tooltip,
 } from '@mui/joy';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const Channel = ({
   name,
@@ -18,23 +20,28 @@ const Channel = ({
   <ListItem
     endAction={
       <>
-        <IconButton
-          size="sm"
-          variant="plain"
-          color="neutral"
-          onClick={onRename}
-        >
-          <EditRoundedIcon />
-        </IconButton>
-        {removable && (
+        <Tooltip title="Rename channel" size="sm" placement="left-end">
           <IconButton
             size="sm"
             variant="plain"
             color="neutral"
-            onClick={onRemove}
+            onClick={onRename}
           >
-            <DeleteIcon />
+            <EditOutlinedIcon />
           </IconButton>
+        </Tooltip>
+        {removable && (
+          <Tooltip title="Delete channel" size="sm" placement="right-start">
+            <IconButton
+              size="sm"
+              variant="plain"
+              color="neutral"
+              onClick={onRemove}
+              sx={{ ml: 1 }}
+            >
+              <DeleteOutlineOutlinedIcon />
+            </IconButton>
+          </Tooltip>
         )}
       </>
     }

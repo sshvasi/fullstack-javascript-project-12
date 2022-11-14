@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Box, Button, IconButton, Typography } from '@mui/joy';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Button, IconButton, Link, Tooltip, Typography } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { removeUser } from '@/slices/authSlice';
 import { openDrawer } from '@/slices/drawerSlice';
@@ -63,7 +64,7 @@ const Header = ({ sx = [], ...props }) => {
         >
           <MenuIcon />
         </IconButton>
-        <Link to="/">
+        <RouterLink to="/">
           <IconButton
             aria-label="Go to home page"
             size="sm"
@@ -72,8 +73,8 @@ const Header = ({ sx = [], ...props }) => {
           >
             <ChatIcon />
           </IconButton>
-        </Link>
-        <Typography component="h1" fontWeight="xl">
+        </RouterLink>
+        <Typography component="h1" level="h4" fontWeight="xl">
           {t('heading')}
         </Typography>
       </Box>
@@ -85,15 +86,22 @@ const Header = ({ sx = [], ...props }) => {
           gap: 2,
         }}
       >
+        <Tooltip title="Github repository" size="sm">
+          <IconButton
+            size="sm"
+            variant="outlined"
+            component="a"
+            href="https://github.com/sshvasi/chat"
+          >
+            <GitHubIcon />
+          </IconButton>
+        </Tooltip>
         <ColorSchemeToggle />
-        <Button
-          size="sm"
-          variant="outlined"
-          onClick={handleLogout}
-          startDecorator={<LogoutIcon />}
-        >
-          {t('signOut')}
-        </Button>
+        <Tooltip title="Log out" size="sm">
+          <IconButton size="sm" variant="outlined" onClick={handleLogout}>
+            <LogoutIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
     </Box>
   );
