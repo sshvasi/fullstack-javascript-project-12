@@ -13,7 +13,7 @@
     "airbnb",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "react-hooks",
+    "plugin:react-hooks/recommended",
     "prettier"
   ],
   "plugins": ["react", "prettier"],
@@ -36,7 +36,10 @@
     "react/react-in-jsx-scope": 0,
     "react/jsx-filename-extension": 0,
     "react/prop-types": 0,
-    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
+    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
   }
