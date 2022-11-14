@@ -9,7 +9,9 @@ const Message = ({ username, content, byCurrentUser }) => (
       px: 2,
       // alignSelf: byCurrentUser ? 'flex-end' : 'flex-start',
       alignSelf: 'flex-start',
-      bgcolor: byCurrentUser ? 'background.currentUser' : 'background.componentBg',
+      bgcolor: byCurrentUser
+        ? 'background.currentUser'
+        : 'background.componentBg',
       border: '1px solid',
       borderRadius: 24,
       borderColor: 'divider',
