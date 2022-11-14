@@ -40,7 +40,7 @@ const Messages = () => {
   return (
     <>
       <MessagesBage
-        channelsName={activeChannel?.name}
+        channelName={activeChannel?.name}
         messagesCount={activeChannelMessages?.length}
       />
       <List

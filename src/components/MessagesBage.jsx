@@ -12,34 +12,36 @@ const MessagesBage = ({ channelName, messagesCount }) => {
     </>
   );
 
-  <Box
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'sticky',
-      py: 0.5,
-      px: 3,
-      bgcolor: 'background.componentBg',
-      borderBottom: '1px solid',
-      borderColor: 'divider',
-    }}
-  >
-    <Typography
-      level="body1"
-      fontSize="sm"
-      fontWeight="lg"
+  return (
+    <Box
       sx={{
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'sticky',
+        py: 0.5,
+        px: 3,
+        bgcolor: 'background.componentBg',
+        borderBottom: '1px solid',
+        borderColor: 'divider',
       }}
     >
-      {channelName}
-    </Typography>
-    <Typography level="body3">{messagesCountBage}</Typography>
-  </Box>;
+      <Typography
+        level="body1"
+        fontSize="sm"
+        fontWeight="lg"
+        sx={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {channelName}
+      </Typography>
+      <Typography level="body3">{messagesCountBage}</Typography>
+    </Box>
+  );
 };
 
 export default MessagesBage;
