@@ -1,19 +1,38 @@
-import { IconButton, ListItem, ListItemButton, ListItemContent } from '@mui/joy';
-import { DeleteForever } from '@mui/icons-material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+} from '@mui/joy';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Channel = ({ name, selected, removable, onSelect, onRename, onRemove }) => (
+const Channel = ({
+  name,
+  selected,
+  removable,
+  onSelect,
+  onRename,
+  onRemove,
+}) => (
   <ListItem
     endAction={
       <>
-        <IconButton size="sm" variant="plain" color="neutral" onClick={onRename}>
+        <IconButton
+          size="sm"
+          variant="plain"
+          color="neutral"
+          onClick={onRename}
+        >
           <EditRoundedIcon />
         </IconButton>
         {removable && (
-          <IconButton size="sm" variant="plain" color="neutral" onClick={onRemove}>
+          <IconButton
+            size="sm"
+            variant="plain"
+            color="neutral"
+            onClick={onRemove}
+          >
             <DeleteIcon />
           </IconButton>
         )}
@@ -31,7 +50,12 @@ const Channel = ({ name, selected, removable, onSelect, onRename, onRemove }) =>
       }}
     >
       <ListItemContent
-        sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', mr: 8 }}
+        sx={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          mr: 8,
+        }}
       >
         {name}
       </ListItemContent>
