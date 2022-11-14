@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -16,19 +16,10 @@ import {
   useGetChannelsQuery,
   useRenameChannelMutation,
 } from '@/slices/apiSlice';
-
-const getSchema = (fieldName, list) => {
-  return yup.object({
-    [fieldName]: yup
-      .string()
-      .trim()
-      .required('Channel name is required')
-      .max(20, 'Must be less than 20 characters')
-      .notOneOf(list, 'Channel already exists'),
-  });
-};
+import { getNewChannelSchema } from '@/utils/schemas';
 
 const RenameChannel = ({ onHide }) => {
+  const { t } = useTranslation();
   const isOpen = useSelector((state) => state.modals.isOpened);
   const channelId = useSelector((state) => state.modals.extra.channelId);
   const { data: channels } = useGetChannelsQuery();
@@ -56,7 +47,7 @@ const RenameChannel = ({ onHide }) => {
     initialErrors: { name: '' },
     validateOnChange: false,
     validateOnBlur: false,
-    validationSchema: getSchema('name', channelNames),
+    validationSchema: getNewChannelSchema('name', channelNames),
     onSubmit: handleSubmit,
   });
 
@@ -77,10 +68,10 @@ const RenameChannel = ({ onHide }) => {
           fontSize="1.25em"
           mb="0.25em"
         >
-          Rename channel
+          {t('forms.modals.rename.title')}
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
-          Write the name of the channel
+          {t('forms.modals.rename.description')}
         </Typography>
         <Box
           component="form"
@@ -93,7 +84,7 @@ const RenameChannel = ({ onHide }) => {
               autoFocus
               id="name"
               name="name"
-              placeholder="Name..."
+              placeholder={t('forms.modals.rename.placeholder')}
               value={formik.values.name}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
@@ -105,7 +96,7 @@ const RenameChannel = ({ onHide }) => {
               onSubmit={formik.handleSubmit}
             >
               <Button variant="plain" color="neutral" onClick={onHide}>
-                Cancel
+                {t('forms.modals.rename.buttons.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -113,7 +104,7 @@ const RenameChannel = ({ onHide }) => {
                 color="success"
                 disabled={formik.isSubmitting}
               >
-                Rename
+                {t('forms.modals.rename.buttons.confirm')}
               </Button>
             </Box>
           </Stack>

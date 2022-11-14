@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -12,6 +13,7 @@ import {
 import { useRemoveChannelMutation } from '@/slices/apiSlice';
 
 const RemoveChannel = ({ onHide }) => {
+  const { t } = useTranslation();
   const isOpen = useSelector((state) => state.modals.isOpened);
   const channelId = useSelector((state) => state.modals.extra.channelId);
   const [removeChannel] = useRemoveChannelMutation();
@@ -44,10 +46,10 @@ const RemoveChannel = ({ onHide }) => {
           fontSize="1.25em"
           mb="0.25em"
         >
-          Confirmation
+          {t('forms.modals.remove.title')}
         </Typography>
         <Typography textColor="text.tertiary" mb={3}>
-          Are you sure you want to delete this channel?
+          {t('forms.modals.remove.description')}
         </Typography>
         <Box
           component="form"
@@ -55,7 +57,7 @@ const RemoveChannel = ({ onHide }) => {
           onSubmit={formik.handleSubmit}
         >
           <Button variant="plain" color="neutral" onClick={onHide}>
-            Cancel
+            {t('forms.modals.remove.buttons.cancel')}
           </Button>
           <Button
             type="submit"
@@ -63,7 +65,7 @@ const RemoveChannel = ({ onHide }) => {
             color="danger"
             disabled={formik.isSubmitting}
           >
-            Delete
+            {t('forms.modals.remove.buttons.confirm')}
           </Button>
         </Box>
       </ModalDialog>

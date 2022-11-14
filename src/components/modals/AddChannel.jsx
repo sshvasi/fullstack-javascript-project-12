@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -16,19 +16,10 @@ import {
   useCreateChannelMutation,
   useGetChannelsQuery,
 } from '@/slices/apiSlice';
-
-const getSchema = (fieldName, list) => {
-  return yup.object({
-    [fieldName]: yup
-      .string()
-      .trim()
-      .required('Channel name is required')
-      .max(20, 'Must be less than 20 characters')
-      .notOneOf(list, 'Channel already exists'),
-  });
-};
+import { getNewChannelSchema } from '@/utils/schemas';
 
 const AddChannel = ({ onHide }) => {
+  const { t } = useTranslation();
   const isOpen = useSelector((state) => state.modals.isOpened);
   const [createChannel] = useCreateChannelMutation();
   const { data: channels } = useGetChannelsQuery();
@@ -55,7 +46,7 @@ const AddChannel = ({ onHide }) => {
     initialErrors: { name: '' },
     validateOnChange: false,
     validateOnBlur: false,
-    validationSchema: getSchema('name', channelNames),
+    validationSchema: getNewChannelSchema('name', channelNames),
     onSubmit: handleSubmit,
   });
 
@@ -76,10 +67,10 @@ const AddChannel = ({ onHide }) => {
           fontSize="1.25em"
           mb="0.25em"
         >
-          Add new channel
+          {t('forms.modals.add.title')}
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
-          Write the name of the channel
+          {t('forms.modals.add.description')}
         </Typography>
         <Box
           component="form"
@@ -92,14 +83,16 @@ const AddChannel = ({ onHide }) => {
               autoFocus
               id="name"
               name="name"
-              placeholder="Name..."
+              placeholder={t('forms.modals.add.placeholder')}
               value={formik.values.name}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
               disabled={formik.isSubmitting}
               onChange={formik.handleChange}
             />
-            <Button type="submit">Add</Button>
+            <Button type="submit">
+              {t('forms.modals.add.buttons.confirm')}
+            </Button>
           </Stack>
         </Box>
       </ModalDialog>

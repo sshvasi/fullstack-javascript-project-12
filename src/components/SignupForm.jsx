@@ -1,31 +1,16 @@
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
 
+import { signupSchema } from '@/utils/schemas';
 import { useSignupUserMutation } from '@/slices/apiSlice';
 import { useEffect } from 'react';
 import { setUser } from '@/slices/authSlice';
 
-const validationSchema = yup.object({
-  username: yup
-    .string('Enter your name')
-    .required('Username is required')
-    .min(3, 'Must be at least 3 characters')
-    .max(20, 'Must be less than 20 characters')
-    .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
-  password: yup
-    .string('Enter your password')
-    .required('Password is required')
-    .min(6, 'Must be at least 6 characters'),
-  passwordConfirmation: yup
-    .string()
-    .required('Please retype your password')
-    .oneOf([yup.ref('password')], 'Passwords do not match'),
-});
-
 const SignupForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -49,9 +34,13 @@ const SignupForm = () => {
       resetForm();
     } catch (error) {
       if (error?.status === 409) {
-        setFieldValue('password', '', false);
         setFieldValue('username', '', false);
-        setFieldError('password', 'User with this name already exists');
+        setFieldValue('password', '', false);
+        setFieldValue('confirmation', '', false);
+        setFieldError(
+          'username',
+          t('forms.signup.password.validation.invalid'),
+        );
       }
     } finally {
       setSubmitting(false);
@@ -60,8 +49,8 @@ const SignupForm = () => {
 
   return (
     <Formik
-      initialValues={{ username: '', password: '', passwordConfirmation: '' }}
-      validationSchema={validationSchema}
+      initialValues={{ username: '', password: '', confirmation: '' }}
+      validationSchema={signupSchema}
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={handleSubmit}
@@ -83,18 +72,26 @@ const SignupForm = () => {
           }}
           onSubmit={handleSubmit}
         >
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 0.5,
+            }}
+          >
             <Typography level="h4" component="h1">
-              Hi!
+              {t('forms.signup.title')}
             </Typography>
-            <Typography level="body2">Sign up to continue.</Typography>
+            <Typography level="body2">
+              {t('forms.signup.description')}
+            </Typography>
           </Box>
           <TextField
             fullWidth
             autoFocus
             id="username"
             name="username"
-            label="Name"
+            label={t('forms.signup.username.label')}
             margin="normal"
             value={values.username}
             error={touched.username && Boolean(errors.username)}
@@ -117,19 +114,14 @@ const SignupForm = () => {
 
           <TextField
             fullWidth
-            id="passwordConfirmation"
-            name="passwordConfirmation"
-            label="Confirm password"
+            id="confirmation"
+            name="confirmation"
+            label={t('forms.signup.confirmation.label')}
             type="password"
             margin="normal"
-            value={values.passwordConfirmation}
-            error={
-              touched.passwordConfirmation &&
-              Boolean(errors.passwordConfirmation)
-            }
-            helperText={
-              touched.passwordConfirmation && errors.passwordConfirmation
-            }
+            value={values.confirmation}
+            error={touched.confirmation && Boolean(errors.confirmation)}
+            helperText={touched.confirmation && errors.confirmation}
             onChange={handleChange}
           />
           <Button fullWidth type="submit" sx={{ mt: 1 }}>
@@ -139,12 +131,12 @@ const SignupForm = () => {
             fontSize="sm"
             endDecorator={
               <Link component={RouterLink} to="/login">
-                Log in
+                {t('forms.signup.login')}
               </Link>
             }
             sx={{ alignSelf: 'center' }}
           >
-            Already have an account?{' '}
+            {t('forms.signup.account')}
           </Typography>
         </Sheet>
       )}

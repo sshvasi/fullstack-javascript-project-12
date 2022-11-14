@@ -1,27 +1,16 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
 
+import { loginSchema } from '@/utils/schemas';
 import { setUser } from '@/slices/authSlice';
 import { useLoginUserMutation } from '@/slices/apiSlice';
 
-const validationSchema = yup.object({
-  username: yup
-    .string('Enter your name')
-    .min(3, 'Must be at least 3 characters')
-    .max(20, 'Must be less than 20 characters')
-    .required('Username is required')
-    .matches(/^[a-zA-Z0-9]+$/, 'Cannot contain special characters or spaces'),
-  password: yup
-    .string('Enter your password')
-    .required('Password is required')
-    .min(6, 'Must be at least 6 characters'),
-});
-
 const LoginForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -47,7 +36,7 @@ const LoginForm = () => {
       if (error?.status === 401) {
         setFieldValue('password', '', false);
         setFieldValue('username', '', false);
-        setFieldError('password', 'Username or password is invalid');
+        setFieldError('password', t('forms.login.password.validation.invalid'));
       }
     } finally {
       setSubmitting(false);
@@ -58,9 +47,9 @@ const LoginForm = () => {
     <Formik
       initialValues={{ username: '', password: '' }}
       initialErrors={{ username: '', password: '' }}
-      validateOnBlur={true}
+      validateOnBlur={false}
       validateOnChange={false}
-      validationSchema={validationSchema}
+      validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
       {({
@@ -88,18 +77,26 @@ const LoginForm = () => {
           }}
           onSubmit={handleSubmit}
         >
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 0.5,
+            }}
+          >
             <Typography level="h4" component="h1">
-              Welcome!
+              {t('forms.login.title')}
             </Typography>
-            <Typography level="body2">Sign in to continue.</Typography>
+            <Typography level="body2">
+              {t('forms.login.description')}
+            </Typography>
           </Box>
           <TextField
             fullWidth
             autoFocus
             id="username"
             name="username"
-            label="Name"
+            label={t('forms.login.username.label')}
             value={values.username}
             error={touched.username && Boolean(errors.username)}
             helperText={touched.username && errors.username}
@@ -110,7 +107,7 @@ const LoginForm = () => {
             fullWidth
             id="password"
             name="password"
-            label="Password"
+            label={t('forms.login.password.label')}
             type="password"
             value={values.password}
             error={touched.password && Boolean(errors.password)}
@@ -130,12 +127,12 @@ const LoginForm = () => {
             fontSize="sm"
             endDecorator={
               <Link component={RouterLink} to="/signup">
-                Sign up
+                {t('forms.login.signup')}
               </Link>
             }
             sx={{ alignSelf: 'center' }}
           >
-            Don&apos;t have an account?
+            {t('forms.login.account')}
           </Typography>
         </Sheet>
       )}

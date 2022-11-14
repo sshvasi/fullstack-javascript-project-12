@@ -8,6 +8,7 @@ import CssBaseline from '@mui/joy/CssBaseline';
 import store from '@/store';
 import router from '@/router';
 import theme from '@/theme';
+import '@/utils/i18n';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, List } from '@mui/joy';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
@@ -7,6 +8,7 @@ import { closeDrawer } from '@/slices/drawerSlice';
 import Channel from '@/components/Channel';
 
 const Channels = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: channels } = useGetChannelsQuery();
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
@@ -51,7 +53,7 @@ const Channels = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Button size="md" variant="outlined" onClick={handleAddChannel()}>
-        New channel
+        {t('channels.buttons.add')}
       </Button>
       <List
         size="sm"

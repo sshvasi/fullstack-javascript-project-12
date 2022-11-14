@@ -1,16 +1,17 @@
+import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/joy';
 
 const MessagesBage = ({ channelName, messagesCount }) => {
+  const { t } = useTranslation();
+
   const isNoMessages = messagesCount === 0;
-  const isAnyMessages = messagesCount !== 0;
   const isManyMessages = messagesCount > 1;
 
-  const messagesCountBage = (
-    <>
-      {isAnyMessages && messagesCount}
-      {isNoMessages ? 'No messages' : isManyMessages ? ' messages' : ' message'}
-    </>
-  );
+  const messagesCountBage = isNoMessages
+    ? t('chat.messages_zero')
+    : isManyMessages
+    ? ` ${t('chat.messages_many', { count: messagesCount })}`
+    : ` ${t('chat.messages_one', { count: messagesCount })}`;
 
   return (
     <Box

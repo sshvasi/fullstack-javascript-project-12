@@ -1,14 +1,17 @@
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Button, IconButton, Typography } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { removeUser } from '@/slices/authSlice';
 import { openDrawer } from '@/slices/drawerSlice';
 import ColorSchemeToggle from '@/components/Layout/ColorSchemeToggle';
 
 const Header = ({ sx = [], ...props }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -71,7 +74,7 @@ const Header = ({ sx = [], ...props }) => {
           </IconButton>
         </Link>
         <Typography component="h1" fontWeight="xl">
-          Chat
+          {t('heading')}
         </Typography>
       </Box>
       <Box
@@ -82,10 +85,15 @@ const Header = ({ sx = [], ...props }) => {
           gap: 2,
         }}
       >
-        <Button size="sm" variant="outlined" onClick={handleLogout}>
-          Log out
-        </Button>
         <ColorSchemeToggle />
+        <Button
+          size="sm"
+          variant="outlined"
+          onClick={handleLogout}
+          startDecorator={<LogoutIcon />}
+        >
+          {t('signOut')}
+        </Button>
       </Box>
     </Box>
   );
