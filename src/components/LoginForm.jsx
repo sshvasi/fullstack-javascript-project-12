@@ -32,7 +32,7 @@ const LoginForm = () => {
       dispatch(setUser(loginData));
       navigate(location.state?.from || { pathname: '/' });
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess]);
 
   const handleSubmit = async (
     values,

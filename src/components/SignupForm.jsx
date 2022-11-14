@@ -1,7 +1,12 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
+
+import { useSignupUserMutation } from '@/slices/apiSlice';
+import { useEffect } from 'react';
+import { setUser } from '@/slices/authSlice';
 
 const validationSchema = yup.object({
   username: yup
@@ -21,8 +26,36 @@ const validationSchema = yup.object({
 });
 
 const SignupForm = () => {
-  const handleSubmit = () => {
-    console.log('submit');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const [signupUser, { data: signupData, isSuccess }] = useSignupUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser(signupData));
+      navigate(location.state?.from || { pathname: '/' });
+    }
+  }, [isSuccess]);
+
+  const handleSubmit = async (
+    values,
+    { setSubmitting, setFieldValue, setFieldError, resetForm },
+  ) => {
+    setSubmitting(true);
+
+    try {
+      await signupUser(values).unwrap();
+      resetForm();
+    } catch (error) {
+      if (error?.status === 409) {
+        setFieldValue('password', '', false);
+        setFieldValue('username', '', false);
+        setFieldError('password', 'User with this name already exists');
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
