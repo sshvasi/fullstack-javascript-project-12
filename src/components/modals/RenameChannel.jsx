@@ -12,7 +12,10 @@ import {
   Typography,
 } from '@mui/joy';
 
-import { useGetChannelsQuery, useRenameChannelMutation } from '@/slices/apiSlice';
+import {
+  useGetChannelsQuery,
+  useRenameChannelMutation,
+} from '@/slices/apiSlice';
 
 const getSchema = (fieldName, list) => {
   return yup.object({
@@ -67,13 +70,23 @@ const RenameChannel = ({ onHide }) => {
         }}
       >
         <ModalClose />
-        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
+        <Typography
+          component="h2"
+          level="inherit"
+          fontSize="1.25em"
+          mb="0.25em"
+        >
           Rename channel
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
           Write the name of the channel
         </Typography>
-        <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+        >
           <Stack spacing={2}>
             <TextField
               autoFocus
@@ -93,7 +106,12 @@ const RenameChannel = ({ onHide }) => {
               <Button variant="plain" color="neutral" onClick={onHide}>
                 Cancel
               </Button>
-              <Button type="submit" variant="solid" color="success" disabled={formik.isSubmitting}>
+              <Button
+                type="submit"
+                variant="solid"
+                color="success"
+                disabled={formik.isSubmitting}
+              >
                 Rename
               </Button>
             </Box>

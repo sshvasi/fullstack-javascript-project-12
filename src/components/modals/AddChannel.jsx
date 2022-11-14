@@ -12,7 +12,10 @@ import {
   Typography,
 } from '@mui/joy';
 
-import { useCreateChannelMutation, useGetChannelsQuery } from '@/slices/apiSlice';
+import {
+  useCreateChannelMutation,
+  useGetChannelsQuery,
+} from '@/slices/apiSlice';
 
 const getSchema = (fieldName, list) => {
   return yup.object({
@@ -26,8 +29,8 @@ const getSchema = (fieldName, list) => {
 
 const AddChannel = ({ onHide }) => {
   const isOpen = useSelector((state) => state.modals.isOpened);
-  const { data: channels } = useGetChannelsQuery();
   const [createChannel] = useCreateChannelMutation();
+  const { data: channels } = useGetChannelsQuery();
   const channelNames = channels.channels.map((c) => c.name);
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -36,6 +39,7 @@ const AddChannel = ({ onHide }) => {
     const channel = {
       name: values.name,
     };
+
     try {
       await createChannel(channel);
       setSubmitting(false);
@@ -65,13 +69,23 @@ const AddChannel = ({ onHide }) => {
         }}
       >
         <ModalClose />
-        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
+        <Typography
+          component="h2"
+          level="inherit"
+          fontSize="1.25em"
+          mb="0.25em"
+        >
           Add new channel
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
           Write the name of the channel
         </Typography>
-        <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+        >
           <Stack spacing={2}>
             <TextField
               autoFocus

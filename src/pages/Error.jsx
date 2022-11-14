@@ -18,7 +18,13 @@ const Error = () => {
       <Typography level="body2" component="p">
         {error.statusText || error.message}
       </Typography>
-      <Link color="primary" level="h3" underline="hover" component={RouterLink} to="/">
+      <Link
+        color="primary"
+        level="h3"
+        underline="hover"
+        component={RouterLink}
+        to="/"
+      >
         Home
       </Link>
     </Grid>

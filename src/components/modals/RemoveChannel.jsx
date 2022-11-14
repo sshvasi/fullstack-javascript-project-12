@@ -1,6 +1,13 @@
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Box, Button, Modal, ModalClose, ModalDialog, Typography } from '@mui/joy';
+import {
+  Box,
+  Button,
+  Modal,
+  ModalClose,
+  ModalDialog,
+  Typography,
+} from '@mui/joy';
 
 import { useRemoveChannelMutation } from '@/slices/apiSlice';
 
@@ -31,7 +38,12 @@ const RemoveChannel = ({ onHide }) => {
     <Modal open={isOpen} onClose={onHide}>
       <ModalDialog>
         <ModalClose />
-        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
+        <Typography
+          component="h2"
+          level="inherit"
+          fontSize="1.25em"
+          mb="0.25em"
+        >
           Confirmation
         </Typography>
         <Typography textColor="text.tertiary" mb={3}>
@@ -45,7 +57,12 @@ const RemoveChannel = ({ onHide }) => {
           <Button variant="plain" color="neutral" onClick={onHide}>
             Cancel
           </Button>
-          <Button type="submit" variant="solid" color="danger" disabled={formik.isSubmitting}>
+          <Button
+            type="submit"
+            variant="solid"
+            color="danger"
+            disabled={formik.isSubmitting}
+          >
             Delete
           </Button>
         </Box>

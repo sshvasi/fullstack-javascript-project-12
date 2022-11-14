@@ -90,8 +90,13 @@ const SignupForm = () => {
             type="password"
             margin="normal"
             value={values.passwordConfirmation}
-            error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
-            helperText={touched.passwordConfirmation && errors.passwordConfirmation}
+            error={
+              touched.passwordConfirmation &&
+              Boolean(errors.passwordConfirmation)
+            }
+            helperText={
+              touched.passwordConfirmation && errors.passwordConfirmation
+            }
             onChange={handleChange}
           />
           <Button fullWidth type="submit" sx={{ mt: 1 }}>

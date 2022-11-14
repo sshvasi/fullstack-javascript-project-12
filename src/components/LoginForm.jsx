@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -34,20 +34,23 @@ const LoginForm = () => {
     }
   }, [isSuccess, navigate]);
 
-  const handleSubmit = async (values, actions) => {
-    actions.setSubmitting(true);
+  const handleSubmit = async (
+    values,
+    { setSubmitting, setFieldValue, setFieldError, resetForm },
+  ) => {
+    setSubmitting(true);
 
     try {
       await loginUser(values).unwrap();
-      actions.resetForm();
+      resetForm();
     } catch (error) {
       if (error?.status === 401) {
-        actions.setFieldValue('password', '', false);
-        actions.setFieldValue('username', '', false);
-        actions.setFieldError('password', 'Username or password is invalid');
+        setFieldValue('password', '', false);
+        setFieldValue('username', '', false);
+        setFieldError('password', 'Username or password is invalid');
       }
     } finally {
-      actions.setSubmitting(false);
+      setSubmitting(false);
     }
   };
 
@@ -60,7 +63,15 @@ const LoginForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
+      {({
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      }) => (
         <Sheet
           noValidate
           component="form"
@@ -107,7 +118,12 @@ const LoginForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <Button fullWidth type="submit" disabled={isSubmitting} sx={{ mt: 1 }}>
+          <Button
+            fullWidth
+            type="submit"
+            disabled={isSubmitting}
+            sx={{ mt: 1 }}
+          >
             Log In
           </Button>
           <Typography
