@@ -12,9 +12,7 @@ const Message = ({ username, content, byCurrentUser }) => (
       bgcolor: byCurrentUser
         ? 'background.currentUser'
         : 'background.componentBg',
-      border: '1px solid',
       borderRadius: 24,
-      borderColor: 'divider',
     }}
   >
     <ListItemContent>
