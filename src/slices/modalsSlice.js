@@ -1,7 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-
-import { apiSlice } from '@/slices/apiSlice';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpened: false,
@@ -14,7 +12,6 @@ export const modalsSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, { payload }) => {
-      console.log('Modal opened: ' + payload.type);
       state.isOpened = true;
       state.type = payload?.type || null;
       state.extra = payload?.extra || null;
@@ -27,10 +24,5 @@ export const modalsSlice = createSlice({
 });
 
 export const selectModalType = (state) => state.modal.type;
-
-export const selectModalExtraChannel = createSelector(
-  [apiSlice.endpoints.getChannels.select(), (state) => state.modal.extra.channelId],
-  (channels, id) => channels.find((channel) => channel.id === id),
-);
 
 export const { openModal, closeModal } = modalsSlice.actions;
