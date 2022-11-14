@@ -56,14 +56,16 @@ export const apiSlice = createApi({
         url: '/channels',
         method: 'GET',
       }),
-      async onCacheEntryAdded(_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+      async onCacheEntryAdded(
+        _arg,
+        { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
+      ) {
         try {
           await cacheDataLoaded;
 
           socket.on(socketEvents.newChannel, (channel) => {
             updateCachedData((draft) => {
               draft.channels.push(channel);
-              draft.currentChannelId = channel.id;
             });
           });
 
@@ -92,7 +94,10 @@ export const apiSlice = createApi({
         url: '/messages',
         method: 'GET',
       }),
-      async onCacheEntryAdded(_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+      async onCacheEntryAdded(
+        _arg,
+        { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
+      ) {
         try {
           await cacheDataLoaded;
 
@@ -104,7 +109,9 @@ export const apiSlice = createApi({
 
           socket.on(socketEvents.removeChannel, ({ id }) => {
             updateCachedData((draft) => {
-              draft.messages = draft.messages.filter((message) => message.channelId !== id);
+              draft.messages = draft.messages.filter(
+                (message) => message.channelId !== id,
+              );
             });
           });
         } catch (error) {
