@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Box, IconButton, Textarea } from '@mui/joy';
@@ -29,6 +30,13 @@ const MessageForm = () => {
     resetForm();
   };
 
+  const formik = useFormik({
+    initialValues: { message: '' },
+    initialErrors: { message: '' },
+    validateOnChange: true,
+    onSubmit: handleSubmit,
+  });
+
   const handleEnterPress = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -36,11 +44,10 @@ const MessageForm = () => {
     }
   };
 
-  const formik = useFormik({
-    initialValues: { message: '' },
-    initialErrors: { message: '' },
-    validateOnChange: true,
-    onSubmit: handleSubmit,
+  // Joy UI doesn't allow use `ref` or `inputRef`.
+  useEffect(() => {
+    const textarea = document.querySelector('.JoyTextarea-textarea');
+    textarea?.focus();
   });
 
   return (
