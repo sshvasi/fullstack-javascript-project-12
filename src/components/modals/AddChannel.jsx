@@ -17,6 +17,7 @@ import {
   useGetChannelsQuery,
 } from '@/slices/apiSlice';
 import { getNewChannelSchema } from '@/utils/schemas';
+import { useEffect } from 'react';
 
 const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -48,6 +49,12 @@ const AddChannel = ({ onHide }) => {
     validateOnBlur: false,
     validationSchema: getNewChannelSchema('name', channelNames),
     onSubmit: handleSubmit,
+  });
+
+  // Joy UI doesn't allow use `ref` or `inputRef`.
+  useEffect(() => {
+    const input = document.querySelector('.JoyInput-input');
+    input?.focus();
   });
 
   return (

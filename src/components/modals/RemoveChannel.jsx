@@ -11,6 +11,7 @@ import {
 } from '@mui/joy';
 
 import { useRemoveChannelMutation } from '@/slices/apiSlice';
+import { useEffect } from 'react';
 
 const RemoveChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -34,6 +35,17 @@ const RemoveChannel = ({ onHide }) => {
   const formik = useFormik({
     initialValues: { id: channelId },
     onSubmit: handleSubmit,
+  });
+
+  // Joy UI doesn't allow focus on button.
+  useEffect(() => {
+    const button = document.querySelector('.JoyButton-root');
+    button?.focus();
+    window.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        formik.submitForm();
+      }
+    });
   });
 
   return (

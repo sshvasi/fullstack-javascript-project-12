@@ -17,12 +17,16 @@ import {
   useRenameChannelMutation,
 } from '@/slices/apiSlice';
 import { getNewChannelSchema } from '@/utils/schemas';
+import { useEffect } from 'react';
 
 const RenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
   const isOpen = useSelector((state) => state.modals.isOpened);
   const channelId = useSelector((state) => state.modals.extra.channelId);
   const { data: channels } = useGetChannelsQuery();
+  const activeChannel = channels?.channels.find(
+    (channel) => channel.id === channelId,
+  );
   const [renameChannel] = useRenameChannelMutation();
   const channelNames = channels.channels.map((c) => c.name);
 
@@ -43,12 +47,19 @@ const RenameChannel = ({ onHide }) => {
   };
 
   const formik = useFormik({
-    initialValues: { name: '' },
+    initialValues: { name: activeChannel.name },
     initialErrors: { name: '' },
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: getNewChannelSchema('name', channelNames),
     onSubmit: handleSubmit,
+  });
+
+  // Joy UI doesn't allow use `ref` or `inputRef`.
+  useEffect(() => {
+    const input = document.querySelector('.JoyInput-input');
+    input?.focus();
+    input?.select();
   });
 
   return (
