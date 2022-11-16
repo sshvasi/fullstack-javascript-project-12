@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ListItem, ListItemContent, Typography } from '@mui/joy';
 
 const Message = ({ username, content, byCurrentUser }) => (
@@ -37,4 +38,4 @@ const Message = ({ username, content, byCurrentUser }) => (
   </ListItem>
 );
 
-export default Message;
+export default memo(Message);

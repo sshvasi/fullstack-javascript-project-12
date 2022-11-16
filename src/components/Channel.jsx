@@ -1,5 +1,5 @@
+import { memo } from 'react';
 import {
-  Box,
   IconButton,
   ListItem,
   ListItemButton,
@@ -70,4 +70,4 @@ const Channel = ({
   </ListItem>
 );
 
-export default Channel;
+export default memo(Channel);
