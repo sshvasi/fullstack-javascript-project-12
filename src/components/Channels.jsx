@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, List } from '@mui/joy';
@@ -14,6 +15,8 @@ const Channels = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
 
   const handleSelectChannel = (id) => () => {
+    // Channels render in both drawer and sidebar,
+    // if user select channel from drawer, close it.
     if (isDrawerOpen) {
       dispatch(closeDrawer());
     }

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { List } from '@mui/joy';
 
@@ -14,15 +14,16 @@ const Messages = () => {
 
   const autoScrollRef = useScrollToBottom(messages, channels);
 
-  const activeChannel = useCallback(
-    channels?.channels.find((c) => c.id === channels?.currentChannelId),
+  const activeChannel = useMemo(
+    () => channels?.channels.find((c) => c.id === channels?.currentChannelId),
     [channels],
   );
 
-  const activeChannelMessages = useCallback(
-    messages?.messages.filter(
-      (m) => m.channelId === channels?.currentChannelId,
-    ),
+  const activeChannelMessages = useMemo(
+    () =>
+      messages?.messages.filter(
+        (m) => m.channelId === channels?.currentChannelId,
+      ),
     [channels, messages],
   );
 
