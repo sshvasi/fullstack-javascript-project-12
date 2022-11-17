@@ -7,11 +7,15 @@ const MessagesBage = ({ channelName, messagesCount }) => {
   const isNoMessages = messagesCount === 0;
   const isManyMessages = messagesCount > 1;
 
-  const messagesCountBage = isNoMessages
-    ? t('chat.messages_zero')
-    : isManyMessages
-    ? ` ${t('chat.messages_many', { count: messagesCount })}`
-    : ` ${t('chat.messages_one', { count: messagesCount })}`;
+  let content = null;
+
+  if (isNoMessages) {
+    content = t('chat.messages_zero');
+  } else if (isManyMessages) {
+    content = ` ${t('chat.messages_many', { count: messagesCount })}`;
+  } else {
+    content = ` ${t('chat.messages_one', { count: messagesCount })}`;
+  }
 
   return (
     <Box
@@ -40,7 +44,7 @@ const MessagesBage = ({ channelName, messagesCount }) => {
       >
         {channelName}
       </Typography>
-      <Typography level="body3">{messagesCountBage}</Typography>
+      <Typography level="body3">{content}</Typography>
     </Box>
   );
 };
