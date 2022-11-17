@@ -28,7 +28,9 @@ const RenameChannel = ({ onHide }) => {
     (channel) => channel.id === channelId,
   );
   const [renameChannel] = useRenameChannelMutation();
-  const channelNames = channels.channels.map((c) => c.name);
+  const channelNames = channels.channels
+    .map((channel) => channel.name)
+    .filter((name) => name !== activeChannel.name);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
