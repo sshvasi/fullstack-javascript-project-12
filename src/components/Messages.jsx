@@ -59,10 +59,17 @@ const Messages = () => {
         channelName={selectedChannel?.name}
         messagesCount={messages?.length}
       />
-      <Sheet ref={autoScrollRef} sx={{ overflow: 'auto' }}>
+      <Sheet
+        ref={autoScrollRef}
+        sx={{
+          overflow: 'auto',
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <List
           sx={{
-            flexGrow: 1,
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
