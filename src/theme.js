@@ -8,6 +8,7 @@ export default extendTheme({
           appBody: 'var(--joy-palette-neutral-50)',
           componentBg: 'var(--joy-palette-common-white)',
           currentUser: 'var(--joy-palette-primary-500)',
+          anotherUser: 'var(--joy-palette-neutral-50)',
         },
         text: {
           currentUser: 'var(--joy-palette-primary-50)',
@@ -20,6 +21,7 @@ export default extendTheme({
           appBody: 'var(--joy-palette-common-black)',
           componentBg: 'var(--joy-palette-neutral-900)',
           currentUser: 'var(--joy-palette-primary-500)',
+          anotherUser: 'var(--joy-palette-neutral-900)',
         },
         text: {
           currentUser: 'var(--joy-palette-primary-50)',

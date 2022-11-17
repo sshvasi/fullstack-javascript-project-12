@@ -1,39 +1,61 @@
 import { memo } from 'react';
-import { ListItem, ListItemContent, Typography } from '@mui/joy';
+import { Box, ListItem, ListItemContent, Typography } from '@mui/joy';
 
-const Message = ({ username, content, byCurrentUser }) => (
+import { formatTime } from '@/utils/dates';
+
+const Message = ({ username, content, byCurrentUser, hours, minutes }) => (
   <ListItem
     sx={{
       maxWidth: 500,
       minWidth: 50,
       py: 1,
       px: 2,
-      // alignSelf: byCurrentUser ? 'flex-end' : 'flex-start',
-      alignSelf: 'flex-start',
+      alignSelf: byCurrentUser ? 'flex-end' : 'flex-start',
       bgcolor: byCurrentUser
         ? 'background.currentUser'
-        : 'background.componentBg',
+        : 'background.anotherUser',
       borderRadius: 24,
     }}
   >
     <ListItemContent>
       <Typography
+        fontSize="sm"
+        fontWeight="lg"
         sx={{
-          fontSize: 'sm',
-          fontWeight: 'lg',
           color: byCurrentUser ? 'text.currentUser' : 'text.primary',
         }}
       >
         {username}
       </Typography>
-      <Typography
+      <Box
         sx={{
-          fontSize: 'sm',
-          color: byCurrentUser ? 'text.currentUser' : 'text.primary',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          gap: 1,
         }}
       >
-        {content}
-      </Typography>
+        <Typography
+          fontSize="sm"
+          sx={{
+            color: byCurrentUser ? 'text.currentUser' : 'text.primary',
+          }}
+        >
+          {content}
+        </Typography>
+        <Typography
+          level="body3"
+          fontSize="xs"
+          fontStyle="italic"
+          sx={{
+            color: byCurrentUser
+              ? 'var(--joy-palette-neutral-200)'
+              : 'var(--joy-palette-neutral-400)',
+          }}
+        >
+          {formatTime({ hours, minutes })}
+        </Typography>
+      </Box>
     </ListItemContent>
   </ListItem>
 );

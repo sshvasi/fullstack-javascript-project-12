@@ -19,6 +19,7 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 7, 2, 15, 4).getTime(),
         username: 'Jack Chapman',
         content:
           'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id vero illo odit architecto ipsum commodi, neque sit eveniet laborum tempora illum et omnis. Aperiam, iusto enim! Eveniet inventore minus officiis, molestiae esse dicta illo accusantium temporibus ut illum in doloribus modi magnam excepturi explicabo ea veniam. Ad accusantium voluptatum sit',
@@ -26,6 +27,7 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 8, 1, 2, 1).getTime(),
         username: 'John Smith',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
@@ -33,12 +35,14 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 8, 13, 11, 1).getTime(),
         username: 'Thomas Adams',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 8, 5, 5, 14).getTime(),
         username: 'Jack Chapman',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. A, fugiat soluta aliquid aut omnis dicta necessitatibus, ab quasi quia, alias eveniet tempora. Quidem nostrum vel iusto cumque quod modi aut corrupti voluptatibus animi, quae commodi facere tenetur repellendus, saepe dolorem, vitae eum nisi iste unde explicabo! Ducimus quam excepturi aliquid esse asperiores obcaecati, consequatur natus reprehenderit repellendus veniam doloremque tenetur optio reiciendis, voluptate culpa consectetur ex repudiandae placeat quaerat est? Voluptate omnis laboriosam labore optio.',
@@ -47,12 +51,14 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 9, 5, 1, 7).getTime(),
         username: 'James Anderson',
         content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 9, 23, 1, 7).getTime(),
         username: 'Jack Booth',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
@@ -60,12 +66,14 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 9, 23, 9, 32).getTime(),
         username: 'Martin Bell',
         content: 'Lorem ipsum dolor sit amet consectetur.',
       },
       {
         id: getNextId(),
         channelId: generalChannelId,
+        date: new Date(2022, 9, 23, 15, 7).getTime(),
         username: 'Jack Chapman',
         content:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo et earum ut iure numquam pariatur dolorem provident ab architecto quod, nulla odio tempora deleniti tempore, nesciunt, possimus quisquam suscipit maxime maiores. At, quas quidem nisi non facere repellat laudantium temporibus dolor magni rem quam id alias commodi ratione recusandae voluptatum consequatur! Assumenda quas blanditiis eos quibusdam dolores incidunt consequuntur rem.',
@@ -73,12 +81,14 @@ const getState = (defaultState) => {
       {
         id: getNextId(),
         channelId: randomChannelId,
+        date: new Date(2022, 10, 8, 10, 15).getTime(),
         username: 'David Brown',
         content: 'Lorem ipsum dolor sit.',
       },
       {
         id: getNextId(),
         channelId: friendsChannelId,
+        date: new Date(2022, 10, 8, 22, 37).getTime(),
         username: 'John Johnson',
         content: 'There are no friends here.',
       },
@@ -117,6 +127,7 @@ export default (app, defaultState = {}) => {
       const messageWithId = {
         ...message,
         id: getNextId(),
+        date: Date.now(),
       };
 
       state.messages.push(messageWithId);
