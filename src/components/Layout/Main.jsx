@@ -10,6 +10,7 @@ const Main = ({ sx = [], ...props }) => (
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        bgcolor: 'background.appBody',
         overflow: 'auto',
       },
       ...(Array.isArray(sx) ? sx : [sx]),

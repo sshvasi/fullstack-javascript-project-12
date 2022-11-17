@@ -5,8 +5,8 @@ export default extendTheme({
     light: {
       palette: {
         background: {
-          appBody: 'var(--joy-palette-neutral-50)',
-          componentBg: 'var(--joy-palette-common-white)',
+          appBody: 'var(--joy-palette-common-white)',
+          componentBg: 'var(--joy-palette-neutral-50)',
           currentUser: 'var(--joy-palette-primary-500)',
           anotherUser: 'var(--joy-palette-neutral-50)',
         },
