@@ -62,9 +62,10 @@ const Channel = ({
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           mr: 8,
+          textTransform: 'lowercase',
         }}
       >
-        {name}
+        # {name}
       </ListItemContent>
     </ListItemButton>
   </ListItem>
