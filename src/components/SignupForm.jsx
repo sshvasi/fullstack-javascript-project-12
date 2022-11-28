@@ -21,7 +21,7 @@ const SignupForm = () => {
       dispatch(setUser(signupData));
       navigate(location.state?.from || { pathname: '/' });
     }
-  }, [isSuccess]);
+  }, [dispatch, location.state?.from, navigate, signupData, isSuccess]);
 
   const handleSubmit = async (
     values,
@@ -37,10 +37,7 @@ const SignupForm = () => {
         setFieldValue('username', '', false);
         setFieldValue('password', '', false);
         setFieldValue('confirmation', '', false);
-        setFieldError(
-          'username',
-          t('forms.signup.password.validation.invalid'),
-        );
+        setFieldError('username', t('forms.signup.password.validation.invalid'));
       }
     } finally {
       setSubmitting(false);
@@ -82,9 +79,7 @@ const SignupForm = () => {
             <Typography level="h4" component="h1">
               {t('forms.signup.title')}
             </Typography>
-            <Typography level="body2">
-              {t('forms.signup.description')}
-            </Typography>
+            <Typography level="body2">{t('forms.signup.description')}</Typography>
           </Box>
           <TextField
             fullWidth

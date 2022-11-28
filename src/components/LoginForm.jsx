@@ -21,7 +21,7 @@ const LoginForm = () => {
       dispatch(setUser(loginData));
       navigate(location.state?.from || { pathname: '/' });
     }
-  }, [isSuccess]);
+  }, [dispatch, location, navigate, loginData, isSuccess]);
 
   const handleSubmit = async (
     values,
@@ -52,15 +52,7 @@ const LoginForm = () => {
       validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
-      {({
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      }) => (
+      {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <Sheet
           noValidate
           component="form"
@@ -87,9 +79,7 @@ const LoginForm = () => {
             <Typography level="h4" component="h1">
               {t('forms.login.title')}
             </Typography>
-            <Typography level="body2">
-              {t('forms.login.description')}
-            </Typography>
+            <Typography level="body2">{t('forms.login.description')}</Typography>
           </Box>
           <TextField
             fullWidth
@@ -115,12 +105,7 @@ const LoginForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <Button
-            fullWidth
-            type="submit"
-            disabled={isSubmitting}
-            sx={{ mt: 1 }}
-          >
+          <Button fullWidth type="submit" disabled={isSubmitting} sx={{ mt: 1 }}>
             Log In
           </Button>
           <Typography
