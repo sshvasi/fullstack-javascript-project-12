@@ -1,25 +1,23 @@
 import { Box } from '@mui/joy';
 
-const SideNav = ({ sx = [], ...props }) => (
+const SideNav = ({ children }) => (
   <Box
     component="nav"
     className="Navigation"
-    {...props}
-    sx={[
-      {
-        display: {
-          xs: 'none',
-          sm: 'initial',
-        },
-        borderRight: '1px solid',
-        p: 2,
-        bgcolor: 'background.componentBg',
-        borderColor: 'divider',
-        overflow: 'auto',
+    sx={{
+      display: {
+        xs: 'none',
+        sm: 'initial',
       },
-      ...(Array.isArray(sx) ? sx : [sx]),
-    ]}
-  />
+      borderRight: '1px solid',
+      p: 2,
+      bgcolor: 'background.componentBg',
+      borderColor: 'divider',
+      overflow: 'auto',
+    }}
+  >
+    {children}
+  </Box>
 );
 
 export default SideNav;

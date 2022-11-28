@@ -3,7 +3,7 @@ import { Box, Sheet } from '@mui/joy';
 
 import { closeDrawer } from '@/slices/drawerSlice';
 
-const SideDrawer = ({ children, sx = [], ...props }) => {
+const SideDrawer = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleCloseDrawer = () => {
@@ -11,21 +11,13 @@ const SideDrawer = ({ children, sx = [], ...props }) => {
   };
 
   return (
-    <Box
-      {...props}
-      sx={[
-        { position: 'fixed', zIndex: 120, width: '100%', height: '100%' },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-    >
+    <Box sx={{ position: 'fixed', zIndex: 120, width: '100%', height: '100%' }}>
       <Box
-        role="button"
         onClick={handleCloseDrawer}
         sx={{
           position: 'absolute',
           inset: 0,
-          bgcolor: (theme) =>
-            `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
+          bgcolor: (theme) => `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
         }}
       />
       <Sheet

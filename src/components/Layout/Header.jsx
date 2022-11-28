@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, IconButton, Link, Tooltip, Typography } from '@mui/joy';
+import { Box, IconButton, Tooltip, Typography } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -11,7 +11,7 @@ import { removeUser } from '@/slices/authSlice';
 import { openDrawer } from '@/slices/drawerSlice';
 import ColorSchemeToggle from '@/components/layout/ColorSchemeToggle';
 
-const Header = ({ sx = [], ...props }) => {
+const Header = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -27,25 +27,21 @@ const Header = ({ sx = [], ...props }) => {
     <Box
       component="header"
       className="Header"
-      {...props}
-      sx={[
-        {
-          position: 'sticky',
-          top: 0,
-          zIndex: 110,
-          gridColumn: '1 / -1',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: 2,
-          borderBottom: '1px solid',
-          p: 2,
-          bgcolor: 'background.componentBg',
-          borderColor: 'divider',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      sx={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 110,
+        gridColumn: '1 / -1',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 2,
+        borderBottom: '1px solid',
+        p: 2,
+        bgcolor: 'background.componentBg',
+        borderColor: 'divider',
+      }}
     >
       <Box
         sx={{

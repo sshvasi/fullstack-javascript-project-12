@@ -1,16 +1,17 @@
 import { Grid as JoyGrid } from '@mui/joy';
 
-const Grid = ({ children, sx = [], ...props }) => (
+const Grid = ({ children }) => (
   <JoyGrid
     container
     direction="column"
     justifyContent="center"
     alignItems="center"
-    sx={[
-      { height: '100vh', gap: 2, bgcolor: 'background.appBody' },
-      ...(Array.isArray(sx) ? sx : [sx]),
-    ]}
-    {...props}
+    sx={{
+      height: '100vh',
+      gap: 2,
+      bgcolor: 'background.appBody',
+      overflow: 'auto',
+    }}
   >
     {children}
   </JoyGrid>

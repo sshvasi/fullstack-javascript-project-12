@@ -1,21 +1,18 @@
 import { Box } from '@mui/joy';
 
-const Main = ({ sx = [], ...props }) => (
+const Main = ({ children }) => (
   <Box
     component="main"
     className="Main"
-    {...props}
-    sx={[
-      {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        bgcolor: 'background.appBody',
-        overflow: 'auto',
-      },
-      ...(Array.isArray(sx) ? sx : [sx]),
-    ]}
-  />
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      bgcolor: 'background.appBody',
+      overflow: 'auto',
+    }}
+  >
+    {children}
+  </Box>
 );
 
 export default Main;
