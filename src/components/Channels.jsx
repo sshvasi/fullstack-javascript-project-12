@@ -33,11 +33,11 @@ const Channels = () => {
   };
 
   const handleRemoveChannel = (id) => () => {
-    dispatch(openModal({ type: 'removing', extra: { channelId: id } }));
+    dispatch(openModal({ type: 'removing', channelId: id }));
   };
 
   const handleRenameChannel = (id) => () => {
-    dispatch(openModal({ type: 'renaming', extra: { channelId: id } }));
+    dispatch(openModal({ type: 'renaming', channelId: id }));
   };
 
   const renderedChannels = channels?.channels.map(({ id, name, removable }) => (
