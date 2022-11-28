@@ -1,22 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  Button,
-  Modal,
-  ModalClose,
-  ModalDialog,
-  Typography,
-} from '@mui/joy';
+import { Box, Button, Modal, ModalClose, ModalDialog, Typography } from '@mui/joy';
 
 import { useRemoveChannelMutation } from '@/slices/apiSlice';
 import { useEffect } from 'react';
 
 const RemoveChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const isOpen = useSelector((state) => state.modals.isOpened);
-  const channelId = useSelector((state) => state.modals.extra.channelId);
+  const { isOpened, channelId } = useSelector((state) => state.modals);
   const [removeChannel] = useRemoveChannelMutation();
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -37,27 +29,25 @@ const RemoveChannel = ({ onHide }) => {
     onSubmit: handleSubmit,
   });
 
-  // Joy UI doesn't allow focus on button.
   useEffect(() => {
-    const button = document.querySelector('.JoyButton-root');
-    button?.focus();
-    window.addEventListener('keypress', (event) => {
+    const handlePressEnter = (event) => {
       if (event.key === 'Enter') {
         formik.submitForm();
       }
-    });
+    };
+
+    window.addEventListener('keypress', handlePressEnter);
+
+    return () => {
+      window.removeEventListener('keypress', handlePressEnter);
+    };
   });
 
   return (
-    <Modal open={isOpen} onClose={onHide}>
+    <Modal open={isOpened} onClose={onHide}>
       <ModalDialog>
         <ModalClose />
-        <Typography
-          component="h2"
-          level="inherit"
-          fontSize="1.25em"
-          mb="0.25em"
-        >
+        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
           {t('forms.modals.remove.title')}
         </Typography>
         <Typography textColor="text.tertiary" mb={3}>
@@ -71,12 +61,7 @@ const RemoveChannel = ({ onHide }) => {
           <Button variant="plain" color="neutral" onClick={onHide}>
             {t('forms.modals.remove.buttons.cancel')}
           </Button>
-          <Button
-            type="submit"
-            variant="solid"
-            color="danger"
-            disabled={formik.isSubmitting}
-          >
+          <Button type="submit" variant="solid" color="danger" disabled={formik.isSubmitting}>
             {t('forms.modals.remove.buttons.confirm')}
           </Button>
         </Box>

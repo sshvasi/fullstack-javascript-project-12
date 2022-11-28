@@ -12,19 +12,19 @@ import {
   Typography,
 } from '@mui/joy';
 
-import {
-  useCreateChannelMutation,
-  useGetChannelsQuery,
-} from '@/slices/apiSlice';
+import { useCreateChannelMutation, useGetChannelsQuery } from '@/slices/apiSlice';
 import { getNewChannelSchema } from '@/utils/schemas';
 import { useEffect } from 'react';
 
 const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const isOpen = useSelector((state) => state.modals.isOpened);
+  const isOpened = useSelector((state) => state.modals.isOpened);
   const [createChannel] = useCreateChannelMutation();
-  const { data: channels } = useGetChannelsQuery();
-  const channelNames = channels.channels.map((c) => c.name);
+  const { channelNames } = useGetChannelsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      channelNames: data.channels.map((channel) => channel.name),
+    }),
+  });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -58,7 +58,7 @@ const AddChannel = ({ onHide }) => {
   });
 
   return (
-    <Modal open={isOpen} onClose={onHide}>
+    <Modal open={isOpened} onClose={onHide}>
       <ModalDialog
         sx={{
           maxWidth: 500,
@@ -68,23 +68,13 @@ const AddChannel = ({ onHide }) => {
         }}
       >
         <ModalClose />
-        <Typography
-          component="h2"
-          level="inherit"
-          fontSize="1.25em"
-          mb="0.25em"
-        >
+        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
           {t('forms.modals.add.title')}
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
           {t('forms.modals.add.description')}
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          onSubmit={formik.handleSubmit}
-        >
+        <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
           <Stack spacing={2}>
             <TextField
               autoFocus
@@ -97,9 +87,7 @@ const AddChannel = ({ onHide }) => {
               disabled={formik.isSubmitting}
               onChange={formik.handleChange}
             />
-            <Button type="submit">
-              {t('forms.modals.add.buttons.confirm')}
-            </Button>
+            <Button type="submit">{t('forms.modals.add.buttons.confirm')}</Button>
           </Stack>
         </Box>
       </ModalDialog>

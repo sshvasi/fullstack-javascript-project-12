@@ -4,17 +4,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isOpened: false,
   type: null,
-  extra: null,
+  channelId: null,
 };
 
 export const modalsSlice = createSlice({
   name: 'modals',
   initialState,
   reducers: {
-    openModal: (state, { payload }) => {
+    openModal: (state, action) => {
+      const { type, channelId } = action.payload;
       state.isOpened = true;
-      state.type = payload?.type || null;
-      state.extra = payload?.extra || null;
+      state.type = type;
+      state.channelId = channelId;
     },
     closeModal: () => {
       return initialState;

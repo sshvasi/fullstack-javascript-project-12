@@ -12,25 +12,22 @@ import {
   Typography,
 } from '@mui/joy';
 
-import {
-  useGetChannelsQuery,
-  useRenameChannelMutation,
-} from '@/slices/apiSlice';
+import { useGetChannelsQuery, useRenameChannelMutation } from '@/slices/apiSlice';
 import { getNewChannelSchema } from '@/utils/schemas';
 import { useEffect } from 'react';
 
 const RenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const isOpen = useSelector((state) => state.modals.isOpened);
-  const channelId = useSelector((state) => state.modals.extra.channelId);
-  const { data: channels } = useGetChannelsQuery();
-  const activeChannel = channels?.channels.find(
-    (channel) => channel.id === channelId,
-  );
+  const { isOpened, channelId } = useSelector((state) => state.modals);
   const [renameChannel] = useRenameChannelMutation();
-  const channelNames = channels.channels
-    .map((channel) => channel.name)
-    .filter((name) => name !== activeChannel.name);
+  const { channelNames, channelToRename } = useGetChannelsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      channelNames: data.channels
+        .filter((channel) => channel.id !== channelId)
+        .map((channel) => channel.name),
+      channelToRename: data.channels.find((channel) => channel.id === channelId),
+    }),
+  });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -39,6 +36,7 @@ const RenameChannel = ({ onHide }) => {
       id: channelId,
       name: values.name,
     };
+
     try {
       await renameChannel(channel);
       setSubmitting(false);
@@ -49,7 +47,7 @@ const RenameChannel = ({ onHide }) => {
   };
 
   const formik = useFormik({
-    initialValues: { name: activeChannel.name },
+    initialValues: { name: channelToRename?.name },
     initialErrors: { name: '' },
     validateOnChange: false,
     validateOnBlur: false,
@@ -61,11 +59,10 @@ const RenameChannel = ({ onHide }) => {
   useEffect(() => {
     const input = document.querySelector('.JoyInput-input');
     input?.focus();
-    input?.select();
   });
 
   return (
-    <Modal open={isOpen} onClose={onHide}>
+    <Modal open={isOpened} onClose={onHide}>
       <ModalDialog
         sx={{
           maxWidth: 500,
@@ -75,23 +72,13 @@ const RenameChannel = ({ onHide }) => {
         }}
       >
         <ModalClose />
-        <Typography
-          component="h2"
-          level="inherit"
-          fontSize="1.25em"
-          mb="0.25em"
-        >
+        <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
           {t('forms.modals.rename.title')}
         </Typography>
         <Typography mt={0.5} mb={2} textColor="text.tertiary">
           {t('forms.modals.rename.description')}
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          onSubmit={formik.handleSubmit}
-        >
+        <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
           <Stack spacing={2}>
             <TextField
               autoFocus
@@ -111,12 +98,7 @@ const RenameChannel = ({ onHide }) => {
               <Button variant="plain" color="neutral" onClick={onHide}>
                 {t('forms.modals.rename.buttons.cancel')}
               </Button>
-              <Button
-                type="submit"
-                variant="solid"
-                color="success"
-                disabled={formik.isSubmitting}
-              >
+              <Button type="submit" variant="solid" color="success" disabled={formik.isSubmitting}>
                 {t('forms.modals.rename.buttons.confirm')}
               </Button>
             </Box>
