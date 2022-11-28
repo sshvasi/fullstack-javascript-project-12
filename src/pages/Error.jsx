@@ -3,7 +3,7 @@ import { Typography } from '@mui/joy';
 import { Link } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import Grid from '@/components/Layout/Grid';
+import Grid from '@/components/layout/Grid';
 
 const Error = () => {
   const { t } = useTranslation();

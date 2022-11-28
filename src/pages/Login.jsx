@@ -1,4 +1,4 @@
-import Grid from '@/components/Layout/Grid';
+import Grid from '@/components/layout/Grid';
 import LoginForm from '@/components/LoginForm';
 
 const Login = () => (

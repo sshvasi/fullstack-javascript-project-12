@@ -9,7 +9,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { removeUser } from '@/slices/authSlice';
 import { openDrawer } from '@/slices/drawerSlice';
-import ColorSchemeToggle from '@/components/Layout/ColorSchemeToggle';
+import ColorSchemeToggle from '@/components/layout/ColorSchemeToggle';
 
 const Header = ({ sx = [], ...props }) => {
   const { t } = useTranslation();

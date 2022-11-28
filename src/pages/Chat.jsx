@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import Root from '@/components/Layout/Root';
-import Header from '@/components/Layout/Header';
-import SideNav from '@/components/Layout/SideNav';
-import SideDrawer from '@/components/Layout/SideDrawer';
-import Main from '@/components/Layout/Main';
+import Root from '@/components/layout/Root';
+import Header from '@/components/layout/Header';
+import SideNav from '@/components/layout/SideNav';
+import SideDrawer from '@/components/layout/SideDrawer';
+import Main from '@/components/layout/Main';
 import Channels from '@/components/Channels';
 import Messages from '@/components/Messages';
 import MessageForm from '@/components/MessageForm';
