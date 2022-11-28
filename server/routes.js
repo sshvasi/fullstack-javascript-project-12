@@ -29,8 +29,7 @@ const getState = (defaultState) => {
         channelId: generalChannelId,
         date: new Date(2022, 8, 1, 2, 1).getTime(),
         username: 'John Smith',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
@@ -60,8 +59,7 @@ const getState = (defaultState) => {
         channelId: generalChannelId,
         date: new Date(2022, 9, 23, 1, 7).getTime(),
         username: 'Jack Booth',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, temporibus.',
       },
       {
         id: getNextId(),
@@ -201,39 +199,31 @@ export default (app, defaultState = {}) => {
       .send({ token, username });
   });
 
-  app.get(
-    '/api/v1/channels',
-    { preValidation: [app.authenticate] },
-    (req, reply) => {
-      const user = state.users.find(({ id }) => id === req.user.userId);
+  app.get('/api/v1/channels', { preValidation: [app.authenticate] }, (req, reply) => {
+    const user = state.users.find(({ id }) => id === req.user.userId);
 
-      if (!user) {
-        reply.send(new Unauthorized());
-        return;
-      }
+    if (!user) {
+      reply.send(new Unauthorized());
+      return;
+    }
 
-      reply
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.pick(state, ['channels', 'currentChannelId']));
-    },
-  );
+    reply
+      .header('Content-Type', 'application/json; charset=utf-8')
+      .send(_.pick(state, ['channels', 'currentChannelId']));
+  });
 
-  app.get(
-    '/api/v1/messages',
-    { preValidation: [app.authenticate] },
-    (req, reply) => {
-      const user = state.users.find(({ id }) => id === req.user.userId);
+  app.get('/api/v1/messages', { preValidation: [app.authenticate] }, (req, reply) => {
+    const user = state.users.find(({ id }) => id === req.user.userId);
 
-      if (!user) {
-        reply.send(new Unauthorized());
-        return;
-      }
+    if (!user) {
+      reply.send(new Unauthorized());
+      return;
+    }
 
-      reply
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.pick(state, ['messages']));
-    },
-  );
+    reply
+      .header('Content-Type', 'application/json; charset=utf-8')
+      .send(_.pick(state, ['messages']));
+  });
 
   app.get('/', (_req, reply) => {
     reply.sendFile('index.html');

@@ -1,10 +1,5 @@
 import { useSelector } from 'react-redux';
-import {
-  Route,
-  Navigate,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from 'react-router-dom';
+import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';

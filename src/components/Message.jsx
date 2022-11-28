@@ -11,9 +11,7 @@ const Message = ({ username, content, byCurrentUser, hours, minutes }) => (
       py: 1,
       px: 2,
       alignSelf: byCurrentUser ? 'flex-end' : 'flex-start',
-      bgcolor: byCurrentUser
-        ? 'background.currentUser'
-        : 'background.anotherUser',
+      bgcolor: byCurrentUser ? 'background.currentUser' : 'background.anotherUser',
       borderRadius: 24,
     }}
   >

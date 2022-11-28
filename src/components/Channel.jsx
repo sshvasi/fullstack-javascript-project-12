@@ -1,44 +1,20 @@
 import { memo } from 'react';
-import {
-  IconButton,
-  ListItem,
-  ListItemButton,
-  ListItemContent,
-  Tooltip,
-} from '@mui/joy';
+import { IconButton, ListItem, ListItemButton, ListItemContent, Tooltip } from '@mui/joy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-const Channel = ({
-  name,
-  selected,
-  removable,
-  onSelect,
-  onRename,
-  onRemove,
-}) => (
+const Channel = ({ name, selected, removable, onSelect, onRename, onRemove }) => (
   <ListItem
     endAction={
       <>
         <Tooltip title="Rename channel" size="sm" placement="left-end">
-          <IconButton
-            size="sm"
-            variant="plain"
-            color="neutral"
-            onClick={onRename}
-          >
+          <IconButton size="sm" variant="plain" color="neutral" onClick={onRename}>
             <EditOutlinedIcon />
           </IconButton>
         </Tooltip>
         {removable && (
           <Tooltip title="Delete channel" size="sm" placement="right-start">
-            <IconButton
-              size="sm"
-              variant="plain"
-              color="neutral"
-              onClick={onRemove}
-              sx={{ ml: 1 }}
-            >
+            <IconButton size="sm" variant="plain" color="neutral" onClick={onRemove} sx={{ ml: 1 }}>
               <DeleteOutlineOutlinedIcon />
             </IconButton>
           </Tooltip>

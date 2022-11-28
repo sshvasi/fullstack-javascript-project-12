@@ -16,10 +16,7 @@ const ColorSchemeToggle = () => {
   }
 
   return (
-    <Tooltip
-      title={mode === 'light' ? 'Turn on dark theme' : 'Turn on light theme'}
-      size="sm"
-    >
+    <Tooltip title={mode === 'light' ? 'Turn on dark theme' : 'Turn on light theme'} size="sm">
       <IconButton
         aria-label="Toggle color mode"
         id="toggle-mode"
