@@ -1,6 +1,5 @@
 import { useRouteError, Link as RouterLink } from 'react-router-dom';
-import { Typography } from '@mui/joy';
-import { Link } from '@mui/material';
+import { Typography, Link } from '@mui/joy';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@/components/layout/Grid';
