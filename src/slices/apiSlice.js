@@ -2,7 +2,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { io } from 'socket.io-client';
 
-const defaultChannelId = 1;
+const BASE_URL = '/api/v1';
+const DEFAULT_CHANNEL_ID = 1;
+const SOCKET_TIMEOUT = 2000;
 
 const socket = io();
 
@@ -13,10 +15,11 @@ const socketEvents = {
   renameChannel: 'renameChannel',
 };
 
-const emit = (eventName) => (payload) => {
-  return new Promise((resolve) => {
-    socket.emit(eventName, payload, (response) => {
-      resolve({ data: response });
+const emit = (eventName) => (message) => {
+  return new Promise((resolve, reject) => {
+    socket.timeout(SOCKET_TIMEOUT).emit(eventName, message, (error, response) => {
+      if (error) reject(error);
+      else resolve({ data: response });
     });
   });
 };
@@ -24,7 +27,7 @@ const emit = (eventName) => (payload) => {
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1',
+    baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { token } = getState().auth;
 
@@ -50,78 +53,7 @@ export const apiSlice = createApi({
         body: data,
       }),
     }),
-    // Initially fetch channels and messages by GET query,
-    // then wait for a socket event and update cache with its data.
-    getChannels: builder.query({
-      query: () => ({
-        url: '/channels',
-        method: 'GET',
-      }),
-      async onCacheEntryAdded(
-        _arg,
-        { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
-      ) {
-        try {
-          await cacheDataLoaded;
 
-          socket.on(socketEvents.newChannel, (channel) => {
-            updateCachedData((draft) => {
-              draft.channels.push(channel);
-            });
-          });
-
-          socket.on(socketEvents.renameChannel, ({ id, name }) => {
-            updateCachedData((draft) => {
-              const channel = draft.channels.find((c) => c.id === id);
-              channel.name = name;
-            });
-          });
-
-          socket.on(socketEvents.removeChannel, ({ id }) => {
-            updateCachedData((draft) => {
-              draft.channels = draft.channels.filter((c) => c.id !== id);
-              draft.currentChannelId = defaultChannelId;
-            });
-          });
-        } catch (error) {
-          console.log(error);
-        }
-
-        await cacheEntryRemoved;
-      },
-    }),
-    getMessages: builder.query({
-      query: () => ({
-        url: '/messages',
-        method: 'GET',
-      }),
-      async onCacheEntryAdded(
-        _arg,
-        { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
-      ) {
-        try {
-          await cacheDataLoaded;
-
-          socket.on(socketEvents.newMessage, (message) => {
-            updateCachedData((draft) => {
-              draft.messages.push(message);
-            });
-          });
-
-          socket.on(socketEvents.removeChannel, ({ id }) => {
-            updateCachedData((draft) => {
-              draft.messages = draft.messages.filter(
-                (message) => message.channelId !== id,
-              );
-            });
-          });
-        } catch (error) {
-          console.log(error);
-        }
-
-        await cacheEntryRemoved;
-      },
-    }),
     createChannel: builder.mutation({
       queryFn: emit(socketEvents.newChannel),
     }),
@@ -133,6 +65,71 @@ export const apiSlice = createApi({
     }),
     sendMessage: builder.mutation({
       queryFn: emit(socketEvents.newMessage),
+    }),
+
+    getChannels: builder.query({
+      query: () => ({
+        url: '/channels',
+        method: 'GET',
+      }),
+      async onCacheEntryAdded(_arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+        try {
+          await cacheDataLoaded;
+
+          socket.on(socketEvents.newChannel, (channel) => {
+            updateCachedData((draft) => {
+              draft.channels.push(channel);
+              draft.currentChannelId = channel.id;
+            });
+          });
+
+          socket.on(socketEvents.renameChannel, ({ id, name }) => {
+            updateCachedData((draft) => {
+              const channel = draft.channels.find((channel) => channel.id === id);
+              channel.name = name;
+            });
+          });
+
+          socket.on(socketEvents.removeChannel, ({ id }) => {
+            updateCachedData((draft) => {
+              draft.channels = draft.channels.filter((channel) => channel.id !== id);
+              draft.currentChannelId = DEFAULT_CHANNEL_ID;
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
+        await cacheEntryRemoved;
+      },
+    }),
+
+    getMessages: builder.query({
+      query: () => ({
+        url: '/messages',
+        method: 'GET',
+      }),
+      async onCacheEntryAdded(_arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+        try {
+          await cacheDataLoaded;
+
+          socket.on(socketEvents.newMessage, (message) => {
+            updateCachedData((draft) => {
+              draft.messages.push(message);
+            });
+          });
+
+          socket.on(socketEvents.removeChannel, ({ id }) => {
+            updateCachedData((draft) => {
+              draft.messages = draft.messages.filter((message) => message.channelId !== id);
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
+        await cacheEntryRemoved;
+      },
     }),
   }),
 });

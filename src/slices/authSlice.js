@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createListenerMiddleware, createSlice } from '@reduxjs/toolkit';
 
-const persistedState = JSON.parse(localStorage.getItem('auth'));
+const preloadedState = JSON.parse(localStorage.getItem('auth'));
 
 const initialState = {
-  username: persistedState?.username || null,
-  token: persistedState?.token || null,
-  isAuthenticated: !!persistedState?.token,
+  username: preloadedState?.username ?? null,
+  token: preloadedState?.token ?? null,
+  isAuthenticated: !!preloadedState?.token,
 };
 
 export const authSlice = createSlice({
