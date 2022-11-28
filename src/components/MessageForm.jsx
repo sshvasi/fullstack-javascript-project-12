@@ -7,34 +7,33 @@ import SendIcon from '@mui/icons-material/Send';
 import { useGetChannelsQuery, useSendMessageMutation } from '@/slices/apiSlice';
 
 const MessageForm = () => {
+  const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
   const { username } = useSelector((state) => state.auth);
-  const { data: channels } = useGetChannelsQuery();
+  const { data: channelsData } = useGetChannelsQuery();
   const [sendMessage] = useSendMessageMutation();
-
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    setSubmitting(true);
-
-    if (values.message.trim() === '') {
-      setSubmitting(false);
-      return;
-    }
-
-    const message = {
-      channelId: channels?.currentChannelId,
-      username,
-      content: values.message,
-    };
-
-    sendMessage(message);
-    setSubmitting(false);
-    resetForm();
-  };
 
   const formik = useFormik({
     initialValues: { message: '' },
     initialErrors: { message: '' },
     validateOnChange: true,
-    onSubmit: handleSubmit,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      setSubmitting(true);
+
+      if (values.message.trim() === '') {
+        setSubmitting(false);
+        return;
+      }
+
+      const message = {
+        channelId: channelsData?.currentChannelId,
+        username,
+        content: values.message,
+      };
+
+      sendMessage(message);
+      setSubmitting(false);
+      resetForm();
+    },
   });
 
   const handleEnterPress = (event) => {
@@ -44,14 +43,29 @@ const MessageForm = () => {
     }
   };
 
-  // Joy UI doesn't allow use `ref` or `inputRef`.
   useEffect(() => {
+    // Joy UI doesn't provide `ref` or `inputRef`, so here is a query selector.
     const textarea = document.querySelector('.JoyTextarea-textarea');
-    textarea?.focus();
+    const mediaQuery = window.matchMedia('(min-width: 600px)');
+
+    const handleWidthChange = (event) => {
+      if (!isDrawerOpen && event.matches) {
+        textarea?.focus();
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleWidthChange);
+
+    handleWidthChange(mediaQuery);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleWidthChange);
+    };
   });
 
   return (
     <Box
+      className="Form"
       component="form"
       noValidate
       autoComplete="off"
@@ -67,23 +81,20 @@ const MessageForm = () => {
         borderColor: 'divider',
       }}
     >
-      <Box sx={{ width: '100%', maxHeight: 200 }}>
-        <Textarea
-          autoFocus
-          id="message"
-          name="message"
-          placeholder="Write a messsage..."
-          maxRows={5}
-          size="md"
-          variant="outlined"
-          color="neutral"
-          sx={{ fontSize: 'sm' }}
-          value={formik.values.message}
-          disabled={formik.isSubmitting}
-          onChange={formik.handleChange}
-          onKeyDown={handleEnterPress}
-        />
-      </Box>
+      <Textarea
+        id="message"
+        name="message"
+        placeholder="Write a messsage..."
+        maxRows={5}
+        size="md"
+        variant="outlined"
+        color="neutral"
+        sx={{ fontSize: 'sm', width: '100%', maxHeight: 200 }}
+        value={formik.values.message}
+        disabled={formik.isSubmitting}
+        onChange={formik.handleChange}
+        onKeyDown={handleEnterPress}
+      />
       <IconButton type="submit" variant="plain" color="primary">
         <SendIcon />
       </IconButton>
