@@ -1,9 +1,7 @@
 import { memo } from 'react';
 import { Box, ListItem, ListItemContent, Typography } from '@mui/joy';
 
-import { formatTime } from '@/utils/dates';
-
-const Message = ({ username, content, byCurrentUser, hours, minutes }) => (
+const Message = ({ username, content, time, byCurrentUser }) => (
   <ListItem
     sx={{
       maxWidth: 500,
@@ -42,16 +40,14 @@ const Message = ({ username, content, byCurrentUser, hours, minutes }) => (
           {content}
         </Typography>
         <Typography
-          level="body3"
           fontSize="xs"
-          fontStyle="italic"
           sx={{
             color: byCurrentUser
-              ? 'var(--joy-palette-neutral-200)'
-              : 'var(--joy-palette-neutral-400)',
+              ? 'var(--joy-palette-neutral-300)'
+              : 'var(--joy-palette-text-tertiary)',
           }}
         >
-          {formatTime({ hours, minutes })}
+          {time}
         </Typography>
       </Box>
     </ListItemContent>

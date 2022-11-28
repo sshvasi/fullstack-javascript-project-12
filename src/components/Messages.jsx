@@ -1,83 +1,75 @@
-import { useSelector } from 'react-redux';
-import { List, Sheet } from '@mui/joy';
+import { List, ListItem, Sheet } from '@mui/joy';
 
-import { months } from '@/utils/dates';
-import useChannelMessages from '@/hooks/useChannelMessages';
+import { MONTHS, parseDate } from '@/utils/dates';
 import useScrollToBottom from '@/hooks/useScrollToBottom';
-import Message from '@/components/Message';
 import MessagesBage from '@/components/MessagesBage';
-import MessagesDate from './MessagesDate';
+import MessagesDate from '@/components/MessagesDate';
+import MessageList from '@/components/MessageList';
+import { useGetChannelsQuery, useGetMessagesQuery } from '@/slices/apiSlice';
 
 const Messages = () => {
-  const { username: currentUsername } = useSelector((state) => state.auth);
-  const { messages, selectedChannel } = useChannelMessages();
-  const autoScrollRef = useScrollToBottom(messages, selectedChannel);
-
-  let currentMonth = null;
-  let currentYear = null;
-
-  const renderedMessages = [];
-
-  messages?.forEach(({ id, username, content, date: timestamp }) => {
-    const date = new Date(timestamp);
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    if (month !== currentMonth) {
-      renderedMessages.push(
-        <MessagesDate
-          key={timestamp}
-          year={year}
-          month={month}
-          day={months[month]}
-          currentYear={currentYear}
-          byCurrentUser={username === currentUsername}
-        />,
-      );
-    }
-
-    renderedMessages.push(
-      <Message
-        key={id}
-        username={username}
-        content={content}
-        hours={hours}
-        minutes={minutes}
-        byCurrentUser={username === currentUsername}
-      />,
-    );
-
-    currentYear = year;
-    currentMonth = month;
+  const { selectedChannel, selectedChannelId } = useGetChannelsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      selectedChannelId: data?.currentChannelId ?? null,
+      selectedChannel:
+        data?.channels.find((channel) => channel.id === data?.currentChannelId) ?? {},
+    }),
   });
 
-  return (
-    <>
-      <MessagesBage
-        channelName={selectedChannel?.name}
-        messagesCount={messages?.length}
-      />
-      <Sheet
-        ref={autoScrollRef}
-        sx={{
-          overflow: 'auto',
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <List
+  const { messages } = useGetMessagesQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      messages:
+        data?.messages
+          .filter((message) => message.channelId === selectedChannelId)
+          .sort((message1, message2) => (message1.date > message2.date ? 1 : -1)) ?? [],
+    }),
+  });
+
+  const messagesGrouppedByDate = messages.reduce((acc, message) => {
+    const { year, month, day } = parseDate(message.date);
+    const key = `${year}_${month}_${day}`;
+    const group = acc[key] || [];
+    return { ...acc, [key]: [...group, message] };
+  }, {});
+
+  let currentYear = null;
+
+  const renderedMessages = Object.entries(messagesGrouppedByDate).map(
+    ([date, currentDateMessages]) => {
+      const [year, month, day] = date.split('_');
+      const isCurrentYear = year === currentYear;
+
+      currentYear = year;
+
+      return (
+        <ListItem
+          key={date}
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: 1,
-            p: 3,
+            p: 0,
           }}
         >
-          {renderedMessages}
-        </List>
+          <MessagesDate year={year} month={MONTHS[month]} day={day} isCurrentYear={isCurrentYear} />
+          <MessageList messages={currentDateMessages} />
+        </ListItem>
+      );
+    },
+  );
+
+  const autoScrollRef = useScrollToBottom(messages.length, selectedChannelId);
+
+  return (
+    <>
+      <MessagesBage channelName={selectedChannel.name} messagesCount={messages.length} />
+      <Sheet
+        ref={autoScrollRef}
+        sx={{
+          flexGrow: 1,
+          overflow: 'auto',
+        }}
+      >
+        <List>{renderedMessages}</List>
       </Sheet>
     </>
   );
