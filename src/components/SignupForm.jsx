@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
@@ -6,7 +7,6 @@ import { Sheet, Button, Link, TextField, Typography, Box } from '@mui/joy';
 
 import { signupSchema } from '@/utils/schemas';
 import { useSignupUserMutation } from '@/slices/apiSlice';
-import { useEffect } from 'react';
 import { setUser } from '@/slices/authSlice';
 
 const SignupForm = () => {
@@ -37,7 +37,14 @@ const SignupForm = () => {
         setFieldValue('username', '', false);
         setFieldValue('password', '', false);
         setFieldValue('confirmation', '', false);
-        setFieldError('username', t('forms.signup.password.validation.invalid'));
+        setFieldError('username', t('forms.errors.duplicateUser'));
+
+        // Joy UI use wrappers around input field,
+        // so using ref (or inputRef like in Material UI) isn't possible
+        const input = document.getElementById('username');
+        if (input) {
+          input.focus();
+        }
       }
     } finally {
       setSubmitting(false);
@@ -77,16 +84,17 @@ const SignupForm = () => {
             }}
           >
             <Typography level="h4" component="h1">
-              {t('forms.signup.title')}
+              {t('signup.header')}
             </Typography>
-            <Typography level="body2">{t('forms.signup.description')}</Typography>
           </Box>
           <TextField
             fullWidth
             autoFocus
+            autoComplete="off"
             id="username"
             name="username"
-            label={t('forms.signup.username.label')}
+            placeholder={t('forms.username.placeholder')}
+            label={t('forms.username.label')}
             margin="normal"
             value={values.username}
             error={touched.username && Boolean(errors.username)}
@@ -98,7 +106,8 @@ const SignupForm = () => {
             fullWidth
             id="password"
             name="password"
-            label="Password"
+            label={t('forms.password.label')}
+            placeholder={t('forms.password.placeholder')}
             type="password"
             margin="normal"
             value={values.password}
@@ -111,7 +120,8 @@ const SignupForm = () => {
             fullWidth
             id="confirmation"
             name="confirmation"
-            label={t('forms.signup.confirmation.label')}
+            label={t('forms.passwordConfirmation.label')}
+            placeholder={t('forms.passwordConfirmation.placeholder')}
             type="password"
             margin="normal"
             value={values.confirmation}
@@ -120,18 +130,18 @@ const SignupForm = () => {
             onChange={handleChange}
           />
           <Button fullWidth type="submit" sx={{ mt: 1 }}>
-            Sign up
+            {t('signup.button')}
           </Button>
           <Typography
             fontSize="sm"
             endDecorator={
               <Link component={RouterLink} to="/login">
-                {t('forms.signup.login')}
+                {t('signup.login')}
               </Link>
             }
             sx={{ alignSelf: 'center' }}
           >
-            {t('forms.signup.account')}
+            {t('signup.hasAccount')}
           </Typography>
         </Sheet>
       )}

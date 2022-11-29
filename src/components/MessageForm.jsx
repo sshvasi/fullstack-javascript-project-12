@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Box, IconButton, Textarea } from '@mui/joy';
+import { Box, Button, Textarea } from '@mui/joy';
 import SendIcon from '@mui/icons-material/Send';
+import { useTranslation } from 'react-i18next';
 
 import { useGetChannelsQuery, useSendMessageMutation } from '@/slices/apiSlice';
 
 const MessageForm = () => {
+  const { t } = useTranslation();
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
   const { username } = useSelector((state) => state.auth);
   const { data: channelsData } = useGetChannelsQuery();
@@ -31,8 +33,8 @@ const MessageForm = () => {
       };
 
       sendMessage(message);
-      setSubmitting(false);
       resetForm();
+      setSubmitting(false);
     },
   });
 
@@ -84,7 +86,8 @@ const MessageForm = () => {
       <Textarea
         id="message"
         name="message"
-        placeholder="Write a messsage..."
+        placeholder={t('forms.message.placeholder')}
+        label={t('forms.message.label')}
         maxRows={5}
         size="md"
         variant="outlined"
@@ -95,9 +98,9 @@ const MessageForm = () => {
         onChange={formik.handleChange}
         onKeyDown={handleEnterPress}
       />
-      <IconButton type="submit" variant="plain" color="primary">
-        <SendIcon />
-      </IconButton>
+      <Button type="submit" variant="plain" color="primary" endDecorator={<SendIcon />}>
+        {t('common.send')}
+      </Button>
     </Box>
   );
 };

@@ -3,11 +3,13 @@ import { initReactI18next } from 'react-i18next';
 
 import resources from '@/locales';
 
+const DEFAULT_LANGUAGE = 'ru';
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en',
+  lng: DEFAULT_LANGUAGE,
   debug: false,
-  fallbackLng: 'en',
+  fallbackLng: DEFAULT_LANGUAGE,
   interpolation: {
     escapeValue: false,
   },

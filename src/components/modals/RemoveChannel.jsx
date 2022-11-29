@@ -48,10 +48,10 @@ const RemoveChannel = ({ onHide }) => {
       <ModalDialog>
         <ModalClose />
         <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
-          {t('forms.modals.remove.title')}
+          {t('modals.remove.header')}
         </Typography>
         <Typography textColor="text.tertiary" mb={3}>
-          {t('forms.modals.remove.description')}
+          {t('modals.remove.confirm')}
         </Typography>
         <Box
           component="form"
@@ -59,10 +59,10 @@ const RemoveChannel = ({ onHide }) => {
           onSubmit={formik.handleSubmit}
         >
           <Button variant="plain" color="neutral" onClick={onHide}>
-            {t('forms.modals.remove.buttons.cancel')}
+            {t('common.cancel')}
           </Button>
           <Button type="submit" variant="solid" color="danger" disabled={formik.isSubmitting}>
-            {t('forms.modals.remove.buttons.confirm')}
+            {t('modals.remove.button')}
           </Button>
         </Box>
       </ModalDialog>

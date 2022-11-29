@@ -8,18 +8,17 @@ const Error = () => {
   const { t } = useTranslation();
   const error = useRouteError();
 
+  console.log(error.statusText || error.message);
+
   return (
     <Grid>
       <Typography level="h1" component="h1">
-        {t('404.title')}
+        {t('404.header')}
       </Typography>
-      <Typography level="body" component="p">
+      <Typography level="h6" component="p">
         {t('404.description')}
       </Typography>
-      <Typography level="body2" component="p">
-        {error.statusText || error.message}
-      </Typography>
-      <Link color="primary" level="body1" underline="none" component={RouterLink} to="/">
+      <Link color="primary" level="h6" underline="none" component={RouterLink} to="/">
         {t('404.button')}
       </Link>
     </Grid>

@@ -13,7 +13,7 @@ import {
 } from '@mui/joy';
 
 import { useCreateChannelMutation, useGetChannelsQuery } from '@/slices/apiSlice';
-import { getNewChannelSchema } from '@/utils/schemas';
+import { getNotInListSchema } from '@/utils/schemas';
 import { useEffect } from 'react';
 
 const AddChannel = ({ onHide }) => {
@@ -47,7 +47,7 @@ const AddChannel = ({ onHide }) => {
     initialErrors: { name: '' },
     validateOnChange: false,
     validateOnBlur: false,
-    validationSchema: getNewChannelSchema('name', channelNames),
+    validationSchema: getNotInListSchema('name', channelNames),
     onSubmit: handleSubmit,
   });
 
@@ -69,10 +69,7 @@ const AddChannel = ({ onHide }) => {
       >
         <ModalClose />
         <Typography component="h2" level="inherit" fontSize="1.25em" mb="0.25em">
-          {t('forms.modals.add.title')}
-        </Typography>
-        <Typography mt={0.5} mb={2} textColor="text.tertiary">
-          {t('forms.modals.add.description')}
+          {t('modals.add.header')}
         </Typography>
         <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
           <Stack spacing={2}>
@@ -80,14 +77,15 @@ const AddChannel = ({ onHide }) => {
               autoFocus
               id="name"
               name="name"
-              placeholder={t('forms.modals.add.placeholder')}
+              label={t('forms.channel.label')}
+              placeholder={t('forms.channel.placeholder')}
               value={formik.values.name}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
               disabled={formik.isSubmitting}
               onChange={formik.handleChange}
             />
-            <Button type="submit">{t('forms.modals.add.buttons.confirm')}</Button>
+            <Button type="submit">{t('modals.add.button')}</Button>
           </Stack>
         </Box>
       </ModalDialog>

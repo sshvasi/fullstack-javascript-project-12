@@ -35,8 +35,15 @@ const LoginForm = () => {
     } catch (error) {
       if (error?.status === 401) {
         setFieldValue('password', '', false);
-        setFieldValue('username', '', false);
-        setFieldError('password', t('forms.login.password.validation.invalid'));
+        setFieldError('password', t('forms.errors.login'));
+
+        // Joy UI use wrappers around input field,
+        // so using ref (or inputRef like in Material UI) isn't possible
+        const input = document.getElementById('username');
+        if (input) {
+          input.focus();
+          input.select();
+        }
       }
     } finally {
       setSubmitting(false);
@@ -76,17 +83,18 @@ const LoginForm = () => {
               gap: 0.5,
             }}
           >
-            <Typography level="h4" component="h1">
-              {t('forms.login.title')}
+            <Typography level="h3" component="h1">
+              {t('login.header')}
             </Typography>
-            <Typography level="body2">{t('forms.login.description')}</Typography>
           </Box>
           <TextField
             fullWidth
             autoFocus
+            autoComplete="off"
             id="username"
             name="username"
-            label={t('forms.login.username.label')}
+            label={t('forms.login.label')}
+            placeholder={t('forms.login.placeholder')}
             value={values.username}
             error={touched.username && Boolean(errors.username)}
             helperText={touched.username && errors.username}
@@ -97,7 +105,8 @@ const LoginForm = () => {
             fullWidth
             id="password"
             name="password"
-            label={t('forms.login.password.label')}
+            label={t('forms.password.label')}
+            placeholder={t('forms.password.placeholder')}
             type="password"
             value={values.password}
             error={touched.password && Boolean(errors.password)}
@@ -106,18 +115,18 @@ const LoginForm = () => {
             onBlur={handleBlur}
           />
           <Button fullWidth type="submit" disabled={isSubmitting} sx={{ mt: 1 }}>
-            Log In
+            {t('login.button')}
           </Button>
           <Typography
             fontSize="sm"
             endDecorator={
               <Link component={RouterLink} to="/signup">
-                {t('forms.login.signup')}
+                {t('login.signup')}
               </Link>
             }
             sx={{ alignSelf: 'center' }}
           >
-            {t('forms.login.account')}
+            {t('login.noAccount')}
           </Typography>
         </Sheet>
       )}

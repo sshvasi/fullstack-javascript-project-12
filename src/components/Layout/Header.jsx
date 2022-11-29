@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, IconButton, Tooltip, Typography } from '@mui/joy';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -52,7 +52,6 @@ const Header = () => {
         }}
       >
         <IconButton
-          aria-label="Open menu with channel list"
           variant="outlined"
           size="sm"
           onClick={handleOpenDrawer}
@@ -61,17 +60,12 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <RouterLink to="/">
-          <IconButton
-            aria-label="Go to home page"
-            size="sm"
-            variant="solid"
-            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-          >
+          <IconButton size="sm" variant="solid" sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
             <ChatIcon />
           </IconButton>
         </RouterLink>
         <Typography component="h1" level="h4" fontWeight="xl">
-          {t('heading')}
+          {t('header.logo')}
         </Typography>
       </Box>
       <Box
@@ -82,7 +76,7 @@ const Header = () => {
           gap: 2,
         }}
       >
-        <Tooltip title="Github repository" size="sm">
+        <Tooltip title={t('header.github')} size="sm">
           <IconButton
             size="sm"
             variant="outlined"
@@ -93,10 +87,15 @@ const Header = () => {
           </IconButton>
         </Tooltip>
         <ColorSchemeToggle />
-        <Tooltip title="Log out" size="sm">
-          <IconButton size="sm" variant="outlined" onClick={handleLogout}>
-            <LogoutIcon />
-          </IconButton>
+        <Tooltip title={t('header.button')} size="sm">
+          <Button
+            size="sm"
+            variant="outlined"
+            onClick={handleLogout}
+            startDecorator={<LogoutIcon />}
+          >
+            {t('header.button')}
+          </Button>
         </Tooltip>
       </Box>
     </Box>

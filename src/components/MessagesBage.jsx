@@ -5,16 +5,19 @@ const MessagesBage = ({ channelName, messagesCount }) => {
   const { t } = useTranslation();
 
   const isNoMessages = messagesCount === 0;
-  const isManyMessages = messagesCount > 1;
+  const isOnlyOneMessage = messagesCount === 1;
+  const isAnyMessages = messagesCount > 1 && messagesCount < 5;
 
   let content = null;
 
   if (isNoMessages) {
-    content = t('chat.messages_zero');
-  } else if (isManyMessages) {
-    content = ` ${t('chat.messages_many', { count: messagesCount })}`;
+    content = t('chat.messages');
+  } else if (isOnlyOneMessage) {
+    content = ` ${t('chat.messages_0', { count: messagesCount })}`;
+  } else if (isAnyMessages) {
+    content = ` ${t('chat.messages_1', { count: messagesCount })}`;
   } else {
-    content = ` ${t('chat.messages_one', { count: messagesCount })}`;
+    content = ` ${t('chat.messages_2', { count: messagesCount })}`;
   }
 
   return (
@@ -42,7 +45,7 @@ const MessagesBage = ({ channelName, messagesCount }) => {
           textOverflow: 'ellipsis',
         }}
       >
-        {channelName}
+        # {channelName}
       </Typography>
       <Typography level="body3">{content}</Typography>
     </Box>
