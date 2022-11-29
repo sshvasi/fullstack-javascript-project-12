@@ -23,7 +23,7 @@
   "type": "module",
   "scripts": {
     "start": "fastify start server/plugin.js -l info -P -a 0.0.0.0 -p 5001",
-    "dev": "npx webpack serve && npm start",
+    "dev": "npx webpack serve & npm start",
     "build": "webpack",
     "lint": "npx eslint ."
   },
