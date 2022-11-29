@@ -16,10 +16,10 @@ const socketEvents = {
 };
 
 const emit = (eventName) => (message) => {
-  return new Promise((resolve, reject) => {
-    socket.timeout(SOCKET_TIMEOUT).emit(eventName, message, (error, response) => {
-      if (error) reject(error);
-      else resolve({ data: response });
+  return new Promise((resolve) => {
+    socket.timeout(SOCKET_TIMEOUT).emit(eventName, message, (error, data) => {
+      if (error) resolve({ error });
+      else resolve({ data });
     });
   });
 };

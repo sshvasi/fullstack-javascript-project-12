@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Box, Button, Textarea } from '@mui/joy';
+import { Box, Button, FormHelperText, Textarea } from '@mui/joy';
 import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
 
@@ -12,38 +12,45 @@ const MessageForm = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
   const { username } = useSelector((state) => state.auth);
   const { data: channelsData } = useGetChannelsQuery();
-  const [sendMessage] = useSendMessageMutation();
+  const [sendMessage, { isLoading: isSending }] = useSendMessageMutation();
+
+  const handleSubmit = async (values, { setSubmitting, setFieldError, resetForm }) => {
+    setSubmitting(true);
+
+    if (values.message.trim() === '') {
+      setSubmitting(false);
+      return;
+    }
+
+    const message = {
+      channelId: channelsData?.currentChannelId,
+      username,
+      content: values.message,
+    };
+
+    try {
+      await sendMessage(message).unwrap();
+      resetForm();
+    } catch {
+      setFieldError('message', t('errors.network'));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleEnterPress = (submitForm) => (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      submitForm();
+    }
+  };
 
   const formik = useFormik({
     initialValues: { message: '' },
     initialErrors: { message: '' },
     validateOnChange: true,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
-      setSubmitting(true);
-
-      if (values.message.trim() === '') {
-        setSubmitting(false);
-        return;
-      }
-
-      const message = {
-        channelId: channelsData?.currentChannelId,
-        username,
-        content: values.message,
-      };
-
-      sendMessage(message);
-      resetForm();
-      setSubmitting(false);
-    },
+    onSubmit: handleSubmit,
   });
-
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      formik.submitForm();
-    }
-  };
 
   useEffect(() => {
     // Joy UI doesn't provide `ref` or `inputRef`, so here is a query selector.
@@ -94,10 +101,20 @@ const MessageForm = () => {
         color="neutral"
         sx={{ fontSize: 'sm', width: '100%', maxHeight: 200 }}
         value={formik.values.message}
-        disabled={formik.isSubmitting}
+        error={formik.touched.message && Boolean(formik.errors.message)}
+        disabled={formik.isSubmitting && isSending}
         onChange={formik.handleChange}
-        onKeyDown={handleEnterPress}
+        onKeyDown={handleEnterPress(formik.submitForm)}
       />
+      {Boolean(formik.errors.message) && (
+        <FormHelperText
+          sx={{
+            color: 'var(--joy-palette-danger-500)',
+          }}
+        >
+          {formik.touched.message && formik.errors.message}
+        </FormHelperText>
+      )}
       <Button type="submit" variant="plain" color="primary" endDecorator={<SendIcon />}>
         {t('common.send')}
       </Button>
