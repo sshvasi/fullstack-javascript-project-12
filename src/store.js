@@ -13,8 +13,5 @@ export default configureStore({
     [drawerSlice.name]: drawerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      listenerMiddleware.middleware,
-      apiSlice.middleware,
-    ),
+    getDefaultMiddleware().concat(listenerMiddleware.middleware, apiSlice.middleware),
 });
