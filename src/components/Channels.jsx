@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, List } from '@mui/joy';
+import { Box, Button, CircularProgress, List } from '@mui/joy';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
@@ -11,7 +11,7 @@ import Channel from '@/components/Channel';
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels } = useGetChannelsQuery();
+  const { data: channels, isLoading } = useGetChannelsQuery();
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
 
   const handleSelectChannel = (id) => () => {
@@ -58,14 +58,18 @@ const Channels = () => {
       <Button size="md" variant="outlined" onClick={handleAddChannel()}>
         {t('channels.buttons.add')}
       </Button>
-      <List
-        size="sm"
-        sx={{
-          '--List-gap': '2px',
-        }}
-      >
-        {renderedChannels}
-      </List>
+      {isLoading ? (
+        <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
+      ) : (
+        <List
+          size="sm"
+          sx={{
+            '--List-gap': '2px',
+          }}
+        >
+          {renderedChannels}
+        </List>
+      )}
     </Box>
   );
 };

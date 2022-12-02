@@ -1,4 +1,4 @@
-import { List, ListItem, Sheet } from '@mui/joy';
+import { CircularProgress, List, ListItem, Sheet } from '@mui/joy';
 
 import { MONTHS, parseDate } from '@/utils/dates';
 import useScrollToBottom from '@/hooks/useScrollToBottom';
@@ -16,12 +16,13 @@ const Messages = () => {
     }),
   });
 
-  const { messages } = useGetMessagesQuery(undefined, {
-    selectFromResult: ({ data }) => ({
+  const { messages, isLoading } = useGetMessagesQuery(undefined, {
+    selectFromResult: ({ data, isLoading }) => ({
       messages:
         data?.messages
           .filter((message) => message.channelId === selectedChannelId)
           .sort((message1, message2) => (message1.date > message2.date ? 1 : -1)) ?? [],
+      isLoading,
     }),
   });
 
@@ -67,9 +68,16 @@ const Messages = () => {
         sx={{
           flexGrow: 1,
           overflow: 'auto',
+          display: isLoading ? 'flex' : 'block',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <List>{renderedMessages}</List>
+        {isLoading ? (
+          <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
+        ) : (
+          <List>{renderedMessages}</List>
+        )}
       </Sheet>
     </>
   );
