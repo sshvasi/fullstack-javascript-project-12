@@ -10,6 +10,7 @@ import { useGetChannelsQuery, useSendMessageMutation } from '@/slices/apiSlice';
 const MessageForm = () => {
   const { t } = useTranslation();
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
+  const isModalOpen = useSelector((state) => state.modals.isOpened);
   const { username } = useSelector((state) => state.auth);
   const { data: channelsData } = useGetChannelsQuery();
   const [sendMessage, { isLoading: isSending }] = useSendMessageMutation();
@@ -58,7 +59,7 @@ const MessageForm = () => {
     const mediaQuery = window.matchMedia('(min-width: 600px)');
 
     const handleWidthChange = (event) => {
-      if (!isDrawerOpen && event.matches) {
+      if (!isModalOpen && !isDrawerOpen && event.matches) {
         textarea?.focus();
       }
     };

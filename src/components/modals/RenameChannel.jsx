@@ -60,7 +60,6 @@ const RenameChannel = ({ onHide }) => {
     const input = document.querySelector('.JoyInput-input');
     if (input) {
       input.focus();
-      input.select();
     }
   });
 

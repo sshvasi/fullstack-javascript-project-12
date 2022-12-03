@@ -5,9 +5,6 @@ import Header from '@/components/layout/Header';
 import SideNav from '@/components/layout/SideNav';
 import SideDrawer from '@/components/layout/SideDrawer';
 import Main from '@/components/layout/Main';
-import Channels from '@/components/Channels';
-import Messages from '@/components/Messages';
-import MessageForm from '@/components/MessageForm';
 import Modal from '@/components/modals';
 import MessagesSection from '@/components/MessagesSection';
 import ChannelsSection from '@/components/ChannelsSection';
@@ -30,8 +27,7 @@ const Chat = () => {
           <ChannelsSection />
         </SideNav>
         <Main>
-          <Messages />
-          <MessageForm />
+          <MessagesSection />
         </Main>
       </Root>
       {isModalOpen && <Modal type={modalType} />}
