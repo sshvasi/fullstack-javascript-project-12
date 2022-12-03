@@ -9,6 +9,8 @@ import Channels from '@/components/Channels';
 import Messages from '@/components/Messages';
 import MessageForm from '@/components/MessageForm';
 import Modal from '@/components/modals';
+import MessagesSection from '@/components/MessagesSection';
+import ChannelsSection from '@/components/ChannelsSection';
 
 const Chat = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
@@ -19,13 +21,13 @@ const Chat = () => {
     <>
       {isDrawerOpen && (
         <SideDrawer>
-          <Channels />
+          <ChannelsSection />
         </SideDrawer>
       )}
       <Root>
         <Header />
         <SideNav>
-          <Channels />
+          <ChannelsSection />
         </SideNav>
         <Main>
           <Messages />

@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, CircularProgress, List } from '@mui/joy';
+import { Box, Button, CircularProgress } from '@mui/joy';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
 import { closeDrawer } from '@/slices/drawerSlice';
-import Channel from '@/components/Channel';
+import ChannelList from './ChannelList';
 
-const Channels = () => {
+const ChannelsSection = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: channels, isLoading } = useGetChannelsQuery();
@@ -40,19 +40,6 @@ const Channels = () => {
     dispatch(openModal({ type: 'renaming', channelId: id }));
   };
 
-  const renderedChannels = channels?.channels.map(({ id, name, removable }) => (
-    <Channel
-      key={id}
-      id={id}
-      name={name}
-      selected={id === channels?.currentChannelId}
-      removable={removable}
-      onSelect={handleSelectChannel(id)}
-      onRename={handleRenameChannel(id)}
-      onRemove={handleRemoveChannel(id)}
-    />
-  ));
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Button size="md" variant="outlined" onClick={handleAddChannel()}>
@@ -61,17 +48,15 @@ const Channels = () => {
       {isLoading ? (
         <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
       ) : (
-        <List
-          size="sm"
-          sx={{
-            '--List-gap': '2px',
-          }}
-        >
-          {renderedChannels}
-        </List>
+        <ChannelList
+          channels={channels?.channels}
+          handleSelectChannel={handleSelectChannel}
+          handleRenameChannel={handleRenameChannel}
+          handleRemoveChannel={handleRemoveChannel}
+        />
       )}
     </Box>
   );
 };
 
-export default Channels;
+export default ChannelsSection;
