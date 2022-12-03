@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Box, ListItem, ListItemContent, Typography } from '@mui/joy';
+import { formatTime } from '@/utils/dates';
 
 const Message = ({ username, content, time, byCurrentUser }) => (
   <ListItem
@@ -47,7 +48,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
               : 'var(--joy-palette-text-tertiary)',
           }}
         >
-          {time}
+          {formatTime(time)}
         </Typography>
       </Box>
     </ListItemContent>
