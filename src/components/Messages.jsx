@@ -1,37 +1,19 @@
 import { CircularProgress, List, ListItem, Sheet } from '@mui/joy';
 
-import { MONTHS, parseDate } from '@/utils/dates';
-import useScrollToBottom from '@/hooks/useScrollToBottom';
 import MessagesBage from '@/components/MessagesBage';
 import MessagesDate from '@/components/MessagesDate';
 import MessageList from '@/components/MessageList';
-import { useGetChannelsQuery, useGetMessagesQuery } from '@/slices/apiSlice';
+import useScrollToBottom from '@/hooks/useScrollToBottom';
+import useGroupByDate from '@/hooks/useGroupByDate';
+import useSelectedChannel from '@/hooks/useSelectedChannel';
+import useActiveMessages from '@/hooks/useActiveMessages';
+import { MONTHS } from '@/utils/dates';
 
 const Messages = () => {
-  const { selectedChannel, selectedChannelId } = useGetChannelsQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      selectedChannelId: data?.currentChannelId ?? null,
-      selectedChannel:
-        data?.channels.find((channel) => channel.id === data?.currentChannelId) ?? {},
-    }),
-  });
-
-  const { messages, isLoading } = useGetMessagesQuery(undefined, {
-    selectFromResult: ({ data, isLoading }) => ({
-      messages:
-        data?.messages
-          .filter((message) => message.channelId === selectedChannelId)
-          .sort((message1, message2) => (message1.date > message2.date ? 1 : -1)) ?? [],
-      isLoading,
-    }),
-  });
-
-  const messagesGrouppedByDate = messages.reduce((acc, message) => {
-    const { year, month, day } = parseDate(message.date);
-    const key = `${year}_${month}_${day}`;
-    const group = acc[key] || [];
-    return { ...acc, [key]: [...group, message] };
-  }, {});
+  const { selectedChannel, selectedChannelId } = useSelectedChannel();
+  const { messages, isLoading } = useActiveMessages(selectedChannelId);
+  const { messagesGrouppedByDate } = useGroupByDate(messages);
+  const autoScrollRef = useScrollToBottom(messages.length, selectedChannelId);
 
   let currentYear = null;
 
@@ -58,27 +40,27 @@ const Messages = () => {
     },
   );
 
-  const autoScrollRef = useScrollToBottom(messages.length, selectedChannelId);
-
   return (
     <>
       <MessagesBage channelName={selectedChannel.name} messagesCount={messages.length} />
-      <Sheet
-        ref={autoScrollRef}
-        sx={{
-          flexGrow: 1,
-          overflow: 'auto',
-          display: isLoading ? 'flex' : 'block',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {isLoading ? (
-          <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
-        ) : (
+      {isLoading ? (
+        <CircularProgress
+          color="primary"
+          variant="soft"
+          size="md"
+          sx={{ my: 20, mx: 'auto', flexGrow: 1 }}
+        />
+      ) : (
+        <Sheet
+          ref={autoScrollRef}
+          sx={{
+            flexGrow: 1,
+            overflow: 'auto',
+          }}
+        >
           <List>{renderedMessages}</List>
-        )}
-      </Sheet>
+        </Sheet>
+      )}
     </>
   );
 };
