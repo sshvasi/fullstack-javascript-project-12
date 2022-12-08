@@ -39,7 +39,7 @@ const RenameChannel = ({ onHide }) => {
     };
 
     try {
-      await renameChannel(channel);
+      await renameChannel(channel).unwrap();
       toast.success(t('toast.rename'));
     } catch (error) {
       console.log(error);

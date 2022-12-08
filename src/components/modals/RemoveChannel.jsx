@@ -16,7 +16,7 @@ const RemoveChannel = ({ onHide }) => {
     setSubmitting(true);
 
     try {
-      await removeChannel({ id: values.id });
+      await removeChannel({ id: values.id }).unwrap();
       toast.success(t('toast.remove'));
     } catch (error) {
       console.log(error);
