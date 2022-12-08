@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import {
   Box,
   Button,
@@ -14,7 +16,6 @@ import {
 
 import { useCreateChannelMutation, useGetChannelsQuery } from '@/slices/apiSlice';
 import { getNotInListSchema } from '@/utils/schemas';
-import { useEffect } from 'react';
 
 const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ const AddChannel = ({ onHide }) => {
   const [createChannel] = useCreateChannelMutation();
   const { channelNames } = useGetChannelsQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      channelNames: data.channels.map((channel) => channel.name),
+      channelNames: data?.channels.map((channel) => channel.name) ?? [],
     }),
   });
 
@@ -34,10 +35,13 @@ const AddChannel = ({ onHide }) => {
     };
 
     try {
-      await createChannel(channel);
-      setSubmitting(false);
+      await createChannel(channel).unwrap();
+      toast.success(t('toast.add'));
+    } catch (error) {
+      console.log(error);
+      toast.error(t('errors.network'));
+    } finally {
       onHide();
-    } catch {
       setSubmitting(false);
     }
   };

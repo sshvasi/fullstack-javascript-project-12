@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Modal, ModalClose, ModalDialog, Typography } from '@mui/joy';
 
 import { useRemoveChannelMutation } from '@/slices/apiSlice';
-import { useEffect } from 'react';
 
 const RemoveChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -16,10 +17,12 @@ const RemoveChannel = ({ onHide }) => {
 
     try {
       await removeChannel({ id: values.id });
-      setSubmitting(false);
-      onHide();
+      toast.success(t('toast.remove'));
     } catch (error) {
       console.log(error);
+      toast.error(t('network.error'));
+    } finally {
+      onHide();
       setSubmitting(false);
     }
   };

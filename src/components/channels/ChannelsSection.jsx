@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, CircularProgress } from '@mui/joy';
+import { toast } from 'react-toastify';
+import { Box, Button, CircularProgress, Typography } from '@mui/joy';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
@@ -11,7 +12,11 @@ import ChannelList from '@/components/channels/ChannelList';
 const ChannelsSection = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels, isLoading } = useGetChannelsQuery();
+  const {
+    data: channels,
+    isLoading: isChannelsLoading,
+    isError: isChannelsError,
+  } = useGetChannelsQuery();
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
 
   const handleSelectChannel = (id) => () => {
@@ -40,21 +45,36 @@ const ChannelsSection = () => {
     dispatch(openModal({ type: 'renaming', channelId: id }));
   };
 
+  let channelsContent = null;
+
+  if (isChannelsLoading) {
+    channelsContent = (
+      <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
+    );
+  } else if (isChannelsError) {
+    toast.error(t('errors.network'), { toastId: t('errors.network') });
+    channelsContent = (
+      <Typography component="p" textAlign="center" mt={2}>
+        {t('errors.network')}
+      </Typography>
+    );
+  } else {
+    channelsContent = (
+      <ChannelList
+        channels={channels?.channels}
+        handleSelectChannel={handleSelectChannel}
+        handleRenameChannel={handleRenameChannel}
+        handleRemoveChannel={handleRemoveChannel}
+      />
+    );
+  }
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Button size="md" variant="outlined" onClick={handleAddChannel()}>
         {t('channels.buttons.add')}
       </Button>
-      {isLoading ? (
-        <CircularProgress color="primary" variant="soft" size="md" sx={{ my: 5, mx: 'auto' }} />
-      ) : (
-        <ChannelList
-          channels={channels?.channels}
-          handleSelectChannel={handleSelectChannel}
-          handleRenameChannel={handleRenameChannel}
-          handleRemoveChannel={handleRemoveChannel}
-        />
-      )}
+      {channelsContent}
     </Box>
   );
 };

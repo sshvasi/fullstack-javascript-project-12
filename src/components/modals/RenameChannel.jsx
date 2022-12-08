@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -14,7 +16,6 @@ import {
 
 import { useGetChannelsQuery, useRenameChannelMutation } from '@/slices/apiSlice';
 import { getNotInListSchema } from '@/utils/schemas';
-import { useEffect } from 'react';
 
 const RenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -39,9 +40,12 @@ const RenameChannel = ({ onHide }) => {
 
     try {
       await renameChannel(channel);
-      setSubmitting(false);
+      toast.success(t('toast.rename'));
+    } catch (error) {
+      console.log(error);
+      toast.error(t('errors.network'));
+    } finally {
       onHide();
-    } catch {
       setSubmitting(false);
     }
   };

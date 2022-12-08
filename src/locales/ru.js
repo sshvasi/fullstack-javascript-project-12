@@ -9,6 +9,12 @@ export default {
       },
     },
 
+    toast: {
+      add: 'Канал создан',
+      rename: 'Канал переименован',
+      remove: 'Канал удалён',
+    },
+
     chat: {
       messages: 'Нет сообщений',
       messages_0: '{{ count }} сообщение',
@@ -119,7 +125,7 @@ export default {
     },
 
     errors: {
-      network: 'Ошибка сети. Попробуйте еще раз',
+      network: 'Ошибка соединения',
     },
   },
 };
