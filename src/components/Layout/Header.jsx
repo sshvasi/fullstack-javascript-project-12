@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/joy';
+import { Box, Button, IconButton, Tooltip, Typography, Link } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -59,14 +59,14 @@ const Header = () => {
         >
           <MenuIcon />
         </IconButton>
-        <RouterLink to="/">
+        <Link component={RouterLink} to="/" underline="none" sx={{ display: 'flex', gap: 2 }}>
           <IconButton size="sm" variant="solid" sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
             <ChatIcon />
           </IconButton>
-        </RouterLink>
-        <Typography component="h1" level="h4" fontWeight="xl">
-          {t('header.logo')}
-        </Typography>
+          <Typography component="h1" level="h4" fontWeight="xl">
+            {t('header.logo')}
+          </Typography>
+        </Link>
       </Box>
       <Box
         sx={{
