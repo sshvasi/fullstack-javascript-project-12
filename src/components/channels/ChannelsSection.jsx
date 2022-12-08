@@ -6,7 +6,7 @@ import { Box, Button, CircularProgress } from '@mui/joy';
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
 import { closeDrawer } from '@/slices/drawerSlice';
-import ChannelList from './ChannelList';
+import ChannelList from '@/components/channels/ChannelList';
 
 const ChannelsSection = () => {
   const { t } = useTranslation();

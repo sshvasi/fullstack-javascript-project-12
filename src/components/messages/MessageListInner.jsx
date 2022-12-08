@@ -1,6 +1,6 @@
 import { List } from '@mui/joy';
 
-import Message from '@/components/Message';
+import Message from '@/components/messages/Message';
 
 const MessageListInner = ({ messages, currentUsername }) => (
   <List

@@ -1,6 +1,6 @@
 import { List } from '@mui/joy';
 
-import Channel from '@/components/Channel';
+import Channel from '@/components/channels/Channel';
 
 const ChannelList = ({
   channels,

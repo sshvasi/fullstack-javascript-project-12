@@ -1,5 +1,5 @@
 import Grid from '@/components/layout/Grid';
-import LoginForm from '@/components/LoginForm';
+import LoginForm from '@/components/forms/LoginForm';
 
 const Login = () => (
   <Grid>

@@ -6,8 +6,8 @@ import SideNav from '@/components/layout/SideNav';
 import SideDrawer from '@/components/layout/SideDrawer';
 import Main from '@/components/layout/Main';
 import Modal from '@/components/modals';
-import MessagesSection from '@/components/MessagesSection';
-import ChannelsSection from '@/components/ChannelsSection';
+import MessagesSection from '@/components/messages/MessagesSection';
+import ChannelsSection from '@/components/channels/ChannelsSection';
 
 const Chat = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);

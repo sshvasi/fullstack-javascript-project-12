@@ -1,7 +1,7 @@
 import { List, ListItem, Sheet } from '@mui/joy';
 
-import MessagesDate from '@/components/MessagesDate';
-import MessageListInner from '@/components/MessageListInner';
+import MessagesDate from '@/components/messages/MessagesDate';
+import MessageListInner from '@/components/messages/MessageListInner';
 
 const MessageListOuter = ({ messagesGrouppedByDate, currentUsername, autoScrollRef }) => {
   let currentYear = null;

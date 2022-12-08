@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/joy';
 
-import MessagesBage from '@/components/MessagesBage';
+import MessagesBage from '@/components/messages/MessagesBage';
+import MessageListOuter from '@/components/messages/MessageListOuter';
+import MessageForm from '@/components/messages/MessageForm';
 import useScrollToBottom from '@/hooks/useScrollToBottom';
 import useGroupByDate from '@/hooks/useGroupByDate';
 import useSelectedChannel from '@/hooks/useSelectedChannel';
 import useActiveMessages from '@/hooks/useActiveMessages';
-import MessageListOuter from '@/components/MessageListOuter';
-import MessageForm from '@/components/MessageForm';
 
 const MessagesSection = () => {
   const { username: currentUsername } = useSelector((state) => state.auth);
