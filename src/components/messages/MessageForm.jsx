@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import { Box, Button, FormHelperText, Textarea } from '@mui/joy';
 import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 import { useGetChannelsQuery, useSendMessageMutation } from '@/slices/apiSlice';
 
@@ -14,6 +16,7 @@ const MessageForm = () => {
   const { username } = useSelector((state) => state.auth);
   const { data: channelsData } = useGetChannelsQuery();
   const [sendMessage, { isLoading: isSending }] = useSendMessageMutation();
+  filter.loadDictionary('ru');
 
   const handleSubmit = async (values, { setSubmitting, setFieldError, resetForm }) => {
     setSubmitting(true);
@@ -26,7 +29,7 @@ const MessageForm = () => {
     const message = {
       channelId: channelsData?.currentChannelId,
       username,
-      content: values.message,
+      content: filter.clean(values.message),
     };
 
     try {
@@ -34,6 +37,7 @@ const MessageForm = () => {
       resetForm();
     } catch {
       setFieldError('message', t('errors.network'));
+      toast.error(t('errors.network'), { toastId: t('errors.network') });
     } finally {
       setSubmitting(false);
     }

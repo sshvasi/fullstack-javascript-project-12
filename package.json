@@ -53,6 +53,7 @@
     "formik": "^2.2.9",
     "http-errors": "^2.0.0",
     "i18next": "^22.0.5",
+    "leo-profanity": "^1.7.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
