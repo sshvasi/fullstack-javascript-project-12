@@ -1,6 +1,7 @@
 const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -52,5 +53,6 @@ module.exports = {
     new ProvidePlugin({
       React: 'react',
     }),
+    new Dotenv(),
   ],
 };
