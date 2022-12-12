@@ -1,15 +1,15 @@
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { useTheme } from '@mui/joy';
 
-import Root from '@/components/layout/Root';
-import Header from '@/components/layout/Header';
-import SideNav from '@/components/layout/SideNav';
-import SideDrawer from '@/components/layout/SideDrawer';
-import Main from '@/components/layout/Main';
-import Modal from '@/components/modals';
 import MessagesSection from '@/components/messages/MessagesSection';
 import ChannelsSection from '@/components/channels/ChannelsSection';
-import { useTheme } from '@mui/joy';
+import Modal from '@/components/modals';
+import Root from '../components/layout/Root';
+import Header from '../components/layout/Header';
+import SideNav from '../components/layout/SideNav';
+import SideDrawer from '../components/layout/SideDrawer';
+import Main from '../components/layout/Main';
 
 const Chat = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
