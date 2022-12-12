@@ -5,11 +5,11 @@ import { useTheme } from '@mui/joy';
 import MessagesSection from '@/components/messages/MessagesSection';
 import ChannelsSection from '@/components/channels/ChannelsSection';
 import Modal from '@/components/modals';
-import Root from '../components/layout/Root';
-import Header from '../components/layout/Header';
-import SideNav from '../components/layout/SideNav';
-import SideDrawer from '../components/layout/SideDrawer';
-import Main from '../components/layout/Main';
+import Root from '@/components/Root';
+import Header from '@/components/Header';
+import SideNav from '@/components/SideNav';
+import SideDrawer from '@/components/SideDrawer';
+import Main from '@/components/Main';
 
 const Chat = () => {
   const isDrawerOpen = useSelector((state) => state.drawer.isOpened);
