@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { List, ListDivider } from '@mui/joy';
 
 import Channel from '@/components/channels/Channel';
@@ -16,9 +17,8 @@ const ChannelList = ({
     }}
   >
     {channels.map(({ id, name, removable }) => (
-      <>
+      <Fragment key={id}>
         <Channel
-          key={id}
           id={id}
           name={name}
           selected={id === currentChannelId}
@@ -28,7 +28,7 @@ const ChannelList = ({
           onRemove={handleRemoveChannel(id)}
         />
         <ListDivider sx={{ m: 0 }} />
-      </>
+      </Fragment>
     ))}
   </List>
 );
