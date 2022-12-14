@@ -5,26 +5,34 @@ export default extendTheme({
     light: {
       palette: {
         background: {
-          appBody: 'var(--joy-palette-neutral-50)',
-          componentBg: 'var(--joy-palette-common-white)',
-          currentUser: 'var(--joy-palette-primary-500)',
-          anotherUser: 'var(--joy-palette-neutral-50)',
+          body: 'var(--joy-palette-common-white)',
+          message: {
+            byCurrentUser: 'var(--joy-palette-primary-400)',
+            byAnotherUser: 'var(--joy-palette-neutral-100)',
+          },
         },
         text: {
-          currentUser: 'var(--joy-palette-primary-50)',
+          message: {
+            byCurrentUser: 'var(--joy-palette-neutral-100)',
+            byAnotherUser: 'var(text.primary)',
+          },
         },
       },
     },
     dark: {
       palette: {
         background: {
-          appBody: 'var(--joy-palette-common-black)',
-          componentBg: 'var(--joy-palette-neutral-900)',
-          currentUser: 'var(--joy-palette-primary-500)',
-          anotherUser: 'var(--joy-palette-neutral-900)',
+          body: 'var(--joy-palette-common-black)',
+          message: {
+            byCurrentUser: 'var(--joy-palette-primary-500)',
+            byAnotherUser: 'var(--joy-palette-neutral-900)',
+          },
         },
         text: {
-          currentUser: 'var(--joy-palette-primary-50)',
+          message: {
+            byCurrentUser: 'var(--joy-palette-neutral-100)',
+            byAnotherUser: 'var(text.primary)',
+          },
         },
       },
     },
