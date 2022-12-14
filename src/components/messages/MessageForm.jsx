@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Box, Button, FormHelperText, Textarea } from '@mui/joy';
+import { Box, FormHelperText, IconButton, Textarea } from '@mui/joy';
 import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -101,7 +101,7 @@ const MessageForm = () => {
         placeholder={t('forms.message.placeholder')}
         label={t('forms.message.label')}
         maxRows={5}
-        size="md"
+        size="lg"
         variant="outlined"
         color="neutral"
         sx={{ fontSize: 'sm', width: '100%', maxHeight: 200 }}
@@ -120,9 +120,11 @@ const MessageForm = () => {
           {formik.touched.message && formik.errors.message}
         </FormHelperText>
       )}
-      <Button type="submit" variant="plain" color="primary" endDecorator={<SendIcon />}>
-        {t('common.send')}
-      </Button>
+      {formik.values.message.length === 0 ? null : (
+        <IconButton type="submit" variant="plain" color="primary" size="lg">
+          <SendIcon />
+        </IconButton>
+      )}
     </Box>
   );
 };

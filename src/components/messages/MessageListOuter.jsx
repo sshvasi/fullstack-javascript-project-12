@@ -10,6 +10,7 @@ const MessageListOuter = ({ messagesGrouppedByDate, currentUsername, autoScrollR
     <Sheet
       ref={autoScrollRef}
       sx={{
+        display: 'flex',
         flexGrow: 1,
         overflow: 'auto',
       }}
@@ -27,6 +28,7 @@ const MessageListOuter = ({ messagesGrouppedByDate, currentUsername, autoScrollR
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                flexGrow: 1,
                 p: 0,
               }}
             >

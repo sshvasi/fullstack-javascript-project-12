@@ -25,7 +25,6 @@ const MessagesBage = ({ channelName, messagesCount }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
         position: 'sticky',
         py: 0.5,
@@ -39,15 +38,18 @@ const MessagesBage = ({ channelName, messagesCount }) => {
         level="body1"
         fontSize="sm"
         fontWeight="lg"
+        textAlign="center"
         sx={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         }}
       >
-        # {channelName}
+        {channelName}
       </Typography>
-      <Typography level="body3">{content}</Typography>
+      <Typography level="body3" textAlign="center">
+        {content}
+      </Typography>
     </Box>
   );
 };

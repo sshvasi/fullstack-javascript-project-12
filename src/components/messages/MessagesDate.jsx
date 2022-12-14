@@ -13,7 +13,12 @@ const MessagesDate = ({ year, month, day, isCurrentYear }) => (
       letterSpacing: 'inherit',
     }}
   >
-    <Typography level="body6" fontSize="xs" fontWeight="md">
+    <Typography
+      level="body6"
+      fontSize="xs"
+      fontWeight="md"
+      sx={{ color: 'var(--joy-palette-text-tertiary)' }}
+    >
       {day} {month} {!isCurrentYear && year}
     </Typography>
   </ListSubheader>

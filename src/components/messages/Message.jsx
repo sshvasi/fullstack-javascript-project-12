@@ -9,9 +9,14 @@ const Message = ({ username, content, time, byCurrentUser }) => (
       minWidth: 50,
       py: 1,
       px: 2,
-      alignSelf: byCurrentUser ? 'flex-end' : 'flex-start',
-      bgcolor: byCurrentUser ? 'background.currentUser' : 'background.anotherUser',
-      borderRadius: 24,
+      alignSelf: {
+        xs: byCurrentUser ? 'flex-end' : 'flex-start',
+        lg: 'flex-start',
+      },
+      bgcolor: byCurrentUser
+        ? 'background.message.byCurrentUser'
+        : 'background.message.byAnotherUser',
+      borderRadius: 'xl',
     }}
   >
     <ListItemContent>
@@ -19,7 +24,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
         fontSize="sm"
         fontWeight="lg"
         sx={{
-          color: byCurrentUser ? 'text.currentUser' : 'text.primary',
+          color: byCurrentUser ? 'text.message.byCurrentUser' : 'text.message.byAnotherUser',
         }}
       >
         {username}
@@ -35,7 +40,8 @@ const Message = ({ username, content, time, byCurrentUser }) => (
         <Typography
           fontSize="sm"
           sx={{
-            color: byCurrentUser ? 'text.currentUser' : 'text.primary',
+            color: byCurrentUser ? 'text.message.byCurrentUser' : 'text.message.byAnotherUser',
+            wordBreak: 'break-word',
           }}
         >
           {content}
@@ -44,7 +50,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
           fontSize="xs"
           sx={{
             color: byCurrentUser
-              ? 'var(--joy-palette-neutral-300)'
+              ? 'var(--joy-palette-neutral-200)'
               : 'var(--joy-palette-text-tertiary)',
           }}
         >
