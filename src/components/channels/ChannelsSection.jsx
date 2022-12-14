@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { Box, Button, CircularProgress, Typography } from '@mui/joy';
+import AddIcon from '@mui/icons-material/Add';
 
 import { apiSlice, useGetChannelsQuery } from '@/slices/apiSlice';
 import { openModal } from '@/slices/modalsSlice';
@@ -62,6 +63,7 @@ const ChannelsSection = () => {
     channelsContent = (
       <ChannelList
         channels={channels?.channels}
+        currentChannelId={channels?.currentChannelId}
         handleSelectChannel={handleSelectChannel}
         handleRenameChannel={handleRenameChannel}
         handleRemoveChannel={handleRemoveChannel}
@@ -71,10 +73,19 @@ const ChannelsSection = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-      <Button size="md" variant="outlined" onClick={handleAddChannel()}>
+      {channelsContent}
+      <Button
+        size="lg"
+        color="neutral"
+        variant="plain"
+        onClick={handleAddChannel()}
+        startDecorator={<AddIcon />}
+        sx={{
+          mx: 1,
+        }}
+      >
         {t('channels.buttons.add')}
       </Button>
-      {channelsContent}
     </Box>
   );
 };

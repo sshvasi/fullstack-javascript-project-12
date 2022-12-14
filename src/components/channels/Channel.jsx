@@ -1,35 +1,45 @@
-import { memo } from 'react';
-import { IconButton, ListItem, ListItemButton, ListItemContent, Tooltip } from '@mui/joy';
+import { memo, useState } from 'react';
+import {
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  ListItemDecorator,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/joy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useTranslation } from 'react-i18next';
+import { MoreVert } from '@mui/icons-material';
+import { useGetMessagesQuery } from '@/slices/apiSlice';
 
-const Channel = ({ name, selected, removable, onSelect, onRename, onRemove }) => {
+const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }) => {
   const { t } = useTranslation();
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const isMenuOpen = Boolean(menuAnchorEl);
+  const { lastMessage } = useGetMessagesQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      lastMessage: data?.messages.filter((message) => message.channelId === id).at(-1),
+    }),
+  });
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
 
   return (
     <ListItem
+      sx={{ m: 0 }}
       endAction={
-        <>
-          <Tooltip title={t('modals.rename.header')} size="sm" placement="left-end">
-            <IconButton size="sm" variant="plain" color="neutral" onClick={onRename}>
-              <EditOutlinedIcon />
-            </IconButton>
-          </Tooltip>
-          {removable && (
-            <Tooltip title={t('modals.remove.header')} size="sm" placement="right-start">
-              <IconButton
-                size="sm"
-                variant="plain"
-                color="neutral"
-                onClick={onRemove}
-                sx={{ ml: 1 }}
-              >
-                <DeleteOutlineOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-        </>
+        <IconButton size="md" variant="plain" color="neutral" onClick={handleMenuOpen}>
+          <MoreVert />
+        </IconButton>
       }
     >
       <ListItemButton
@@ -38,21 +48,43 @@ const Channel = ({ name, selected, removable, onSelect, onRename, onRemove }) =>
         color="neutral"
         onClick={onSelect}
         sx={{
-          p: 1,
-          borderRadius: 8,
+          px: 1,
+          py: 1.5,
         }}
       >
         <ListItemContent
           sx={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            mr: 8,
+            mr: 5,
           }}
         >
-          # {name}
+          <Typography fontWeight="md" noWrap>
+            {name}
+          </Typography>
+          {lastMessage?.content.length ? (
+            <Typography level="body2" noWrap>
+              {lastMessage?.username} {`: ${lastMessage?.content}`}
+            </Typography>
+          ) : (
+            <Typography level="body2" noWrap>
+              {t('chat.messages')}
+            </Typography>
+          )}
         </ListItemContent>
       </ListItemButton>
+      <Menu anchorEl={menuAnchorEl} open={isMenuOpen} onClose={handleMenuClose}>
+        <MenuItem onClick={onRename}>
+          <ListItemDecorator>
+            <EditOutlinedIcon />
+          </ListItemDecorator>
+          {t('channels.buttons.rename')}
+        </MenuItem>
+        <MenuItem color="danger" onClick={onRemove} disabled={!removable}>
+          <ListItemDecorator>
+            <DeleteOutlineOutlinedIcon />
+          </ListItemDecorator>
+          {t('channels.buttons.delete')}
+        </MenuItem>
+      </Menu>
     </ListItem>
   );
 };
