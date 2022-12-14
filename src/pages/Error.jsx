@@ -2,7 +2,7 @@ import { useRouteError, Link as RouterLink } from 'react-router-dom';
 import { Typography, Link } from '@mui/joy';
 import { useTranslation } from 'react-i18next';
 
-import Grid from '@/components/Grid';
+import Grid from '@/components/layout/Grid';
 
 const Error = () => {
   const { t } = useTranslation();

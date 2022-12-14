@@ -7,7 +7,7 @@ const Main = ({ children }) => (
     sx={{
       display: 'flex',
       flexDirection: 'column',
-      bgcolor: 'background.appBody',
+      bgcolor: 'background.body',
       overflow: 'auto',
     }}
   >

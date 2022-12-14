@@ -16,7 +16,7 @@ const Root = ({ children }) => {
           md: 'minmax(160px, 300px) minmax(500px, 1fr)',
         },
         gridTemplateRows: '64px 1fr',
-        bgcolor: 'background.appBody',
+        bgcolor: 'background.body',
       }}
     >
       {children}

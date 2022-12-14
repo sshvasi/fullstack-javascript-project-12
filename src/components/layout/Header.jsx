@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, IconButton, Tooltip, Typography, Link } from '@mui/joy';
+import { Box, IconButton, Tooltip, Typography, Link } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,7 +9,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { removeUser } from '@/slices/authSlice';
 import { openDrawer } from '@/slices/drawerSlice';
-import ColorSchemeToggle from '@/components/ColorSchemeToggle';
+import ColorSchemeToggle from '@/components/layout/ColorSchemeToggle';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const Header = () => {
         gap: 2,
         borderBottom: '1px solid',
         p: 2,
-        bgcolor: 'background.componentBg',
+        bgcolor: 'background.body',
         borderColor: 'divider',
       }}
     >
@@ -88,14 +88,9 @@ const Header = () => {
         </Tooltip>
         <ColorSchemeToggle />
         <Tooltip title={t('header.button')} size="sm">
-          <Button
-            size="sm"
-            variant="outlined"
-            onClick={handleLogout}
-            startDecorator={<LogoutIcon />}
-          >
-            {t('header.button')}
-          </Button>
+          <IconButton size="sm" variant="outlined" onClick={handleLogout}>
+            <LogoutIcon />
+          </IconButton>
         </Tooltip>
       </Box>
     </Box>

@@ -22,12 +22,11 @@ const SideDrawer = ({ children }) => {
       />
       <Sheet
         sx={{
-          minWidth: 256,
-          width: 'max-content',
+          width: 256,
           height: '100%',
           p: 2,
           boxShadow: 'lg',
-          bgcolor: 'background.componentBg',
+          bgcolor: 'background.body',
           overflow: 'auto',
         }}
       >

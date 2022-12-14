@@ -1,4 +1,4 @@
-import Grid from '@/components/Grid';
+import Grid from '@/components/layout/Grid';
 import SignupForm from '@/components/forms/SignupForm';
 
 const Signup = () => (

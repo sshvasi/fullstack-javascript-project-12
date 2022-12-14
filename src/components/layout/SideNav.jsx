@@ -10,8 +10,8 @@ const SideNav = ({ children }) => (
         sm: 'initial',
       },
       borderRight: '1px solid',
-      p: 2,
-      bgcolor: 'background.componentBg',
+      // p: 2,
+      bgcolor: 'background.body',
       borderColor: 'divider',
       overflow: 'auto',
     }}

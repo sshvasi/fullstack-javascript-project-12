@@ -9,7 +9,7 @@ const Grid = ({ children }) => (
     sx={{
       height: '100vh',
       gap: 2,
-      bgcolor: 'background.appBody',
+      bgcolor: 'background.body',
       overflow: 'auto',
     }}
   >
