@@ -66,7 +66,7 @@ const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }
             </Typography>
           ) : (
             <Typography level="body2" noWrap>
-              {t('chat.messages')}
+              {t('chat.messages_0')}
             </Typography>
           )}
         </ListItemContent>

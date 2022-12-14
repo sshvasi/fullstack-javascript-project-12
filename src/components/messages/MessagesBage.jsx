@@ -6,15 +6,12 @@ const MessagesBage = ({ channelName, messagesCount }) => {
 
   const isNoMessages = messagesCount === 0;
   const isOnlyOneMessage = messagesCount === 1;
-  const isAnyMessages = messagesCount > 1 && messagesCount < 5;
 
   let content = null;
 
   if (isNoMessages) {
-    content = t('chat.messages');
+    content = t('chat.messages_0');
   } else if (isOnlyOneMessage) {
-    content = ` ${t('chat.messages_0', { count: messagesCount })}`;
-  } else if (isAnyMessages) {
     content = ` ${t('chat.messages_1', { count: messagesCount })}`;
   } else {
     content = ` ${t('chat.messages_2', { count: messagesCount })}`;
