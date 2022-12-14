@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import i18n from '@/utils/i18n';
+import i18n from '@/app/i18n';
 
 export const loginSchema = yup.object({
   username: yup.string().trim().required(i18n.t('forms.validation.required')),

@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom';
 import { Provider as StoreProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary, LEVEL_INFO } from '@rollbar/react';
@@ -8,13 +8,13 @@ import CssBaseline from '@mui/joy/CssBaseline';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '@/pages/Error';
-import store from '@/store';
-import router from '@/router';
-import theme from '@/theme';
-import '@/utils/i18n';
+import store from '@/app/store';
+import router from '@/app/router';
+import theme from '@/app/theme';
+import '@/app/i18n';
 
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
+const CODE_VERSION = '1.0.0';
+const ROOT_ID = 'root';
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_TOKEN,
@@ -25,15 +25,18 @@ const rollbarConfig = {
     client: {
       javascript: {
         source_map_enabled: true,
-        code_version: '1.0.0',
+        code_version: CODE_VERSION,
         guess_uncaught_frames: true,
       },
     },
   },
 };
 
+const container = document.getElementById(ROOT_ID);
+const root = createRoot(container);
+
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <RollbarProvider config={rollbarConfig}>
       <StoreProvider store={store}>
         <CssVarsProvider theme={theme}>
@@ -44,5 +47,5 @@ root.render(
         </CssVarsProvider>
       </StoreProvider>
     </RollbarProvider>
-  </React.StrictMode>,
+  </StrictMode>,
 );

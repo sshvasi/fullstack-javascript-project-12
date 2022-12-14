@@ -1,113 +1,127 @@
 export default {
   translation: {
-    heading: 'Chat',
-    signOut: 'Log out',
     channels: {
+      title: 'Channels',
       buttons: {
         add: 'New channel',
+        rename: 'Rename',
+        delete: 'Delete',
       },
     },
+
+    toast: {
+      add: 'Channel added',
+      rename: 'Channel renamed',
+      remove: 'Channel removed',
+    },
+
     chat: {
-      messages_zero: 'No messages',
-      messages_one: '{{ count }} message',
-      messages_many: '{{ count }} messages',
-      placeholder: 'Write a message...',
+      messages_0: 'No messages',
+      messages_1: '{{ count }} message',
+      messages_2: '{{ count }} messages',
+      placeholder: 'Write message...',
     },
 
     forms: {
-      modals: {
-        add: {
-          title: 'Add new channel',
-          description: 'Write the name of the channel',
-          placeholder: 'Name...',
-          buttons: {
-            confirm: 'Add',
-          },
-          validation: {
-            required: 'Channel name is required',
-            max: 'Must be less than 20 characters',
-            exists: 'Channel with this name already exists',
-          },
-        },
-        rename: {
-          title: 'Rename channel',
-          description: 'Write the name of the channel',
-          placeholder: 'Name...',
-          buttons: {
-            confirm: 'Rename',
-            cancel: 'Cancel',
-          },
-          validation: {
-            required: 'Channel name is required',
-            max: 'Must be less than 20 characters',
-            exists: 'Channel with this name already exists',
-          },
-        },
-        remove: {
-          title: 'Remove channel',
-          description: 'Are you sure you want to delete this channel?',
-          buttons: {
-            confirm: 'Yes',
-            cancel: 'No',
-          },
-        },
-      },
       login: {
-        title: 'Welcome!',
-        description: 'Sign in to continue',
-        account: "Don't have an account?",
-        signup: 'Sign up',
-        username: {
-          label: 'Username',
-          validation: {
-            min: 'Must be at least 3 characters',
-            max: 'Must be less than 20 characters',
-            required: 'Username is required',
-            characters: 'Cannot contain special characters or spaces',
-          },
-        },
-        password: {
-          label: 'Password',
-          validation: {
-            required: 'Password is required',
-            min: 'Must be at least 6 characters',
-            invalid: 'Username or password is invalid',
-          },
+        label: 'Your nickname',
+        placeholder: 'Write nickname...',
+      },
+      username: {
+        label: 'Username',
+        placeholder: 'Write username...',
+        validation: {
+          length: 'More than 3 and less than 20 symbols',
         },
       },
-      signup: {
-        title: 'Welcome!',
-        description: 'Sign up to continue',
-        account: 'Already have an account?',
-        login: 'Log in',
-        username: {
-          label: 'Username',
-          validation: {
-            min: 'Must be at least 3 characters',
-            max: 'Must be less than 20 characters',
-            required: 'Username is required',
-            characters: 'Cannot contain special characters or spaces',
-            exists: 'User with this name already exists',
-          },
+      password: {
+        label: 'Password',
+        placeholder: 'Write password',
+        validation: {
+          length: 'More than 6 symbols',
         },
-        password: {
-          label: 'Password',
-          validation: {
-            required: 'Password is required',
-            min: 'Must be at least 6 characters',
-          },
-        },
-        confirmation: {
-          label: 'Confirm password',
-          required: 'Please retype your password',
+      },
+      passwordConfirmation: {
+        label: 'Password confirmation',
+        placeholder: 'Confirm password...',
+        validation: {
           match: 'Passwords do not match',
         },
       },
+      channel: {
+        label: 'Name',
+        placeholder: 'Write channel name',
+        validation: {
+          list: 'Channel already exists',
+        },
+      },
+      message: {
+        label: 'Message text',
+        placeholder: 'Write message...',
+      },
+      validation: {
+        required: 'Field is required',
+      },
+      errors: {
+        duplicateUser: 'User already exists',
+        login: 'Username or password are not correct',
+      },
     },
+
+    header: {
+      logo: 'Messenger',
+      button: 'Log out',
+      github: 'Github repository',
+      light: 'Turn on light theme',
+      dark: 'Turn on dark theme',
+    },
+
+    login: {
+      header: 'Log in',
+      button: 'Log in',
+      noAccount: "Don't have an account?",
+      signup: 'Sign up',
+    },
+
+    signup: {
+      header: 'Registration',
+      button: 'Sign up',
+      hasAccount: 'Already have an account?',
+      login: 'Log in',
+    },
+
+    modals: {
+      add: {
+        header: 'Add channel',
+        button: 'Add',
+      },
+      rename: {
+        header: 'Rename channel',
+        button: 'Rename',
+      },
+      remove: {
+        header: 'Delete channel',
+        confirm: 'Are you sure?',
+        button: 'Delete',
+      },
+    },
+
     404: {
-      title: '404',
-      description: "That page couldn't be found",
-      button: 'Go home',
+      header: 'Error',
+      description: 'An unexpected error occured',
+      button: 'Home',
+    },
+
+    common: {
+      cancel: 'Cancel',
+      send: 'Send',
+      delete: 'Delete',
+      loading: 'Loading...',
+      error: 'Something went wrong',
+    },
+
+    errors: {
+      network: 'Network error',
     },
   },
 };

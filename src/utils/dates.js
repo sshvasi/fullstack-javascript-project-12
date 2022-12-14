@@ -1,6 +1,6 @@
 export const getDateParts = (timestamp) => {
   const date = new Date(timestamp);
-  const formatter = new Intl.DateTimeFormat('ru', {
+  const formatter = new Intl.DateTimeFormat('en', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
