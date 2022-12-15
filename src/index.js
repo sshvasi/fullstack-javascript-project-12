@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider as StoreProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary, LEVEL_INFO } from '@rollbar/react';
@@ -39,7 +39,7 @@ root.render(
   <StrictMode>
     <RollbarProvider config={rollbarConfig}>
       <StoreProvider store={store}>
-        <CssVarsProvider theme={theme}>
+        <CssVarsProvider defaultMode="system" theme={theme}>
           <CssBaseline />
           <ErrorBoundary level={LEVEL_INFO} fallbackUI={Error}>
             <RouterProvider router={router} />
