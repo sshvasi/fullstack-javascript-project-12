@@ -11,8 +11,9 @@ import {
 } from '@mui/joy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { useTranslation } from 'react-i18next';
 import { MoreVert } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
+
 import { useGetMessagesQuery } from '@/slices/apiSlice';
 
 const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }) => {
@@ -44,10 +45,15 @@ const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }
     >
       <ListItemButton
         selected={selected}
-        variant={selected ? 'soft' : 'plain'}
-        color="neutral"
+        variant={selected ? 'solid' : 'plain'}
+        color={selected ? 'primary' : 'neutral'}
         onClick={onSelect}
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          height: 85,
           px: 1,
           py: 1.5,
         }}
@@ -57,15 +63,40 @@ const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }
             mr: 5,
           }}
         >
-          <Typography fontWeight="md" noWrap>
+          <Typography
+            fontWeight="md"
+            fontSize="sm"
+            noWrap
+            sx={{
+              color: selected ? 'text.active' : 'text.inactive',
+            }}
+          >
             {name}
           </Typography>
           {lastMessage?.content.length ? (
-            <Typography level="body2" noWrap>
-              {lastMessage?.username} {`: ${lastMessage?.content}`}
+            <Typography
+              fontSize="sm"
+              lineHeight={1.3}
+              sx={{
+                color: selected ? 'text.active' : 'var(--joy-palette-text-tertiary)',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                display: '-webkit-box !important',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                WhiteSpace: 'normal',
+              }}
+            >
+              {lastMessage?.username}: {lastMessage?.content}
             </Typography>
           ) : (
-            <Typography level="body2" noWrap>
+            <Typography
+              level="body2"
+              noWrap
+              sx={{
+                color: selected ? 'text.active' : 'var(--joy-palette-text-tertiary)',
+              }}
+            >
               {t('chat.messages_0')}
             </Typography>
           )}
