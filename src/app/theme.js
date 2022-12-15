@@ -6,16 +6,12 @@ export default extendTheme({
       palette: {
         background: {
           body: 'var(--joy-palette-common-white)',
-          message: {
-            byCurrentUser: 'var(--joy-palette-primary-400)',
-            byAnotherUser: 'var(--joy-palette-neutral-100)',
-          },
+          active: 'var(--joy-palette-primary-solidBg)',
+          inactive: 'var(--joy-palette-neutral-100)',
         },
         text: {
-          message: {
-            byCurrentUser: 'var(--joy-palette-neutral-100)',
-            byAnotherUser: 'var(text.primary)',
-          },
+          active: 'var(--joy-palette-neutral-100)',
+          inactive: 'var(text.primary)',
         },
       },
     },
@@ -23,16 +19,12 @@ export default extendTheme({
       palette: {
         background: {
           body: 'var(--joy-palette-common-black)',
-          message: {
-            byCurrentUser: 'var(--joy-palette-primary-500)',
-            byAnotherUser: 'var(--joy-palette-neutral-900)',
-          },
+          active: 'var(--joy-palette-primary-500)',
+          inactive: 'var(--joy-palette-neutral-900)',
         },
         text: {
-          message: {
-            byCurrentUser: 'var(--joy-palette-neutral-100)',
-            byAnotherUser: 'var(text.primary)',
-          },
+          active: 'var(--joy-palette-neutral-100)',
+          inactive: 'var(text.primary)',
         },
       },
     },
