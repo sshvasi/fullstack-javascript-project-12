@@ -44,7 +44,6 @@ const Channel = ({ id, name, selected, removable, onSelect, onRename, onRemove }
       }
     >
       <ListItemButton
-        selected={selected}
         variant={selected ? 'solid' : 'plain'}
         color={selected ? 'primary' : 'neutral'}
         onClick={onSelect}
