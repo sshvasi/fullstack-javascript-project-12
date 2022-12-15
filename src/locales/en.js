@@ -57,7 +57,7 @@ export default {
       },
       message: {
         label: 'Message text',
-        placeholder: 'Write message...',
+        placeholder: 'Write a message...',
       },
       validation: {
         required: 'Field is required',
