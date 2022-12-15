@@ -13,9 +13,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
         xs: byCurrentUser ? 'flex-end' : 'flex-start',
         lg: 'flex-start',
       },
-      bgcolor: byCurrentUser
-        ? 'background.message.byCurrentUser'
-        : 'background.message.byAnotherUser',
+      bgcolor: byCurrentUser ? 'background.active' : 'background.inactive',
       borderRadius: 'xl',
     }}
   >
@@ -24,7 +22,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
         fontSize="sm"
         fontWeight="lg"
         sx={{
-          color: byCurrentUser ? 'text.message.byCurrentUser' : 'text.message.byAnotherUser',
+          color: byCurrentUser ? 'text.active' : 'text.inactive',
         }}
       >
         {username}
@@ -40,7 +38,7 @@ const Message = ({ username, content, time, byCurrentUser }) => (
         <Typography
           fontSize="sm"
           sx={{
-            color: byCurrentUser ? 'text.message.byCurrentUser' : 'text.message.byAnotherUser',
+            color: byCurrentUser ? 'text.active' : 'text.inactive',
             wordBreak: 'break-word',
           }}
         >
