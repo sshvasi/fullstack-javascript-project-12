@@ -24,7 +24,6 @@ const SideDrawer = ({ children }) => {
         sx={{
           width: 256,
           height: '100%',
-          p: 2,
           boxShadow: 'lg',
           bgcolor: 'background.body',
           overflow: 'auto',
