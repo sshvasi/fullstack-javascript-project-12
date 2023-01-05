@@ -63,7 +63,12 @@ const Header = () => {
           <IconButton size="sm" variant="solid" sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
             <ChatIcon />
           </IconButton>
-          <Typography component="h1" level="h4" fontWeight="xl">
+          <Typography
+            component="h1"
+            level="h4"
+            fontWeight="xl"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
             {t('header.logo')}
           </Typography>
         </Link>
